@@ -1,9 +1,9 @@
-import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { createEsploraBitcoin } from "./bitcoin-esplora.js";
-import { createHashResolver, indexChainEvents, loadOffchainEventMap, scanAndIndexTransactions } from "./chain-indexer.js";
-import { scanTransactions } from "./chain-scanner.js";
+import { loadChainFixtureTxs } from "./chain-fixtures.js";
+import { createHashResolver, loadOffchainEventMap, scanAndIndexTransactions } from "./chain-indexer.js";
+import { createChainIngestor } from "./chain-ingest.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(__dirname, "../../..");
@@ -12,7 +12,7 @@ const chainFixtureDir = path.resolve(projectRoot, "fixtures/chain");
 const command = process.argv[2] || "scan-fixtures";
 
 if (command === "scan-fixtures") {
-  const txs = await loadChainFixtures(chainFixtureDir);
+  const txs = await loadChainFixtureTxs(chainFixtureDir);
   const offchain = await loadOffchainEventMap(path.join(chainFixtureDir, "offchain"));
   const result = await scanAndIndexTransactions(txs, {
     resolveEventByHash: createHashResolver(offchain)
@@ -28,19 +28,27 @@ if (command === "scan-fixtures") {
   const blockBody = await fetchJson(`${baseUrl}/block/${hash}/txs`, fetchImpl);
   const result = await scanAndIndexTransactions(blockBody);
   printResult(result);
+} else if (command === "ingest-fixtures") {
+  const statePath = process.env.BRC_CHAIN_STATE_PATH || path.join(projectRoot, ".tmp/chain-ingest/state.json");
+  const ingestor = createChainIngestor({
+    statePath,
+    offchainDir: path.join(chainFixtureDir, "offchain")
+  });
+  await ingestor.init();
+  const txs = await loadChainFixtureTxs(chainFixtureDir);
+  const result = await ingestor.ingestTransactions(txs);
+  ingestor.getState().last_height = 840011;
+  ingestor.getState().tip_height = 840011;
+  await ingestor.persist();
+  const snapshot = await ingestor.getSnapshot();
+  console.log("\nBRC-DMP Chain Ingest (fixtures)");
+  console.log("=".repeat(64));
+  console.log(`events added: ${result.added_events}`);
+  console.log(`state_root: ${snapshot.indexed.state.state_root}`);
+  console.log(`stored at: ${statePath}`);
+  console.log("");
 } else {
-  throw new Error(`unknown command: ${command}`);
-}
-
-async function loadChainFixtures(directory) {
-  const files = (await readdir(directory))
-    .filter((file) => file.endsWith(".json") && file.startsWith("tx-"))
-    .sort();
-  const txs = [];
-  for (const file of files) {
-    txs.push(JSON.parse(await readFile(path.join(directory, file), "utf8")));
-  }
-  return txs;
+  throw new Error(`unknown command: ${command} (scan-fixtures | scan-block | ingest-fixtures)`);
 }
 
 async function fetchJson(url, fetchImpl) {

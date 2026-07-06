@@ -21,6 +21,11 @@
     "csv:signet:anchor": "node services/csv-adapter/src/signet-anchor.js",
     "chain:scan": "node services/csv-adapter/src/chain-cli.js scan-fixtures",
     "chain:scan:block": "node services/csv-adapter/src/chain-cli.js scan-block",
+    "chain:fixtures": "node scripts/build-chain-fixtures.mjs",
+    "chain:ingest:fixtures": "node services/csv-adapter/src/chain-cli.js ingest-fixtures",
+    "chain:ingest": "node services/csv-adapter/src/chain-daemon.js catch-up",
+    "chain:daemon": "node services/csv-adapter/src/chain-daemon.js daemon",
+    "chain:ingest:status": "node services/csv-adapter/src/chain-daemon.js status",
     "gen:pop": "node scripts/generate-population.mjs",
     "api": "node services/api/server.js"
   },

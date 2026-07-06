@@ -5,3 +5,5 @@ export { decodeChainPayload, encodeEventHashPayload, encodeEventPayload } from "
 export { encodeInscriptionWitness, parseInscriptionWitness } from "./inscription.js";
 export { enrichEvent, extractEventsFromTx, scanTransactions, sortChainEvents } from "./chain-scanner.js";
 export { createHashResolver, indexChainEvents, loadOffchainEventMap, scanAndIndexTransactions } from "./chain-indexer.js";
+export { buildChainFixtureTxs, loadChainFixtureTxs } from "./chain-fixtures.js";
+export { createChainIngestor } from "./chain-ingest.js";

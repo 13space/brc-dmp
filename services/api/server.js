@@ -6,6 +6,8 @@ import { buildStateFromDirectory, loadEventsFromDirectory } from "../indexer/src
 import { batchEvents, buildContract, createMockBitcoin, planGenesis, validateContract } from "../csv-adapter/src/index.js";
 import { verifyAgentState } from "../agent-wallet/verify.js";
 import { loadOffchainEventMap, scanAndIndexTransactions, createHashResolver } from "../csv-adapter/src/chain-indexer.js";
+import { createChainIngestor } from "../csv-adapter/src/chain-ingest.js";
+import { loadChainFixtureTxs } from "../csv-adapter/src/chain-fixtures.js";
 import { buildEngineRootPayload, loadLifeWorld } from "./life.js";
 import { evolveSweep, runEvolution } from "../world-engine/src/evolve.js";
 import { adaptiveDriftStudy, runAdaptiveEvolution } from "../world-engine/src/adapt.js";
@@ -21,6 +23,8 @@ const host = process.env.BRC_DMP_HOST || "127.0.0.1";
 const fixtureDir = path.resolve(projectRoot, process.env.BRC_DMP_FIXTURE_DIR || "fixtures/valid");
 const lifeFixtureDir = path.resolve(projectRoot, process.env.BRC_LIFE_FIXTURE_DIR || "fixtures/life");
 const chainFixtureDir = path.resolve(projectRoot, "fixtures/chain");
+const chainIngestStatePath = process.env.BRC_CHAIN_STATE_PATH || path.join(projectRoot, ".tmp/chain-ingest/state.json");
+const chainOffchainDir = process.env.BRC_CHAIN_OFFCHAIN_DIR || path.join(chainFixtureDir, "offchain");
 
 const server = http.createServer(async (request, response) => {
   try {
@@ -53,6 +57,33 @@ const server = http.createServer(async (request, response) => {
         engine_root: indexed.world.engine_root,
         assets: indexed.state.assets.length,
         events: indexed.events.map((event) => ({
+          op: event.op,
+          dmo_id: event.dmo_id,
+          event_id: event.event_id,
+          transport: event.chain_meta?.transport,
+          block: event.source?.block
+        }))
+      });
+    }
+
+    if (url.pathname === "/chain/ingest/status" || url.pathname === "/chain/ingest/state") {
+      const ingestor = createChainIngestor({ statePath: chainIngestStatePath, offchainDir: chainOffchainDir });
+      await ingestor.init();
+      const snapshot = await ingestor.getSnapshot();
+      if (url.pathname === "/chain/ingest/status") {
+        return send(response, 200, {
+          ...snapshot.ingest,
+          assets: snapshot.indexed.state.assets.length,
+          state_root: snapshot.indexed.state.state_root,
+          engine_root: snapshot.indexed.world.engine_root
+        });
+      }
+      return send(response, 200, {
+        ingest: snapshot.ingest,
+        state_root: snapshot.indexed.state.state_root,
+        engine_root: snapshot.indexed.world.engine_root,
+        assets: snapshot.indexed.state.assets,
+        events: snapshot.indexed.events.map((event) => ({
           op: event.op,
           dmo_id: event.dmo_id,
           event_id: event.event_id,
@@ -435,16 +466,4 @@ function buildDaoSummary(state) {
 
 function trustMean(trust) {
   return (trust.authenticity + trust.provenance + trust.market + trust.curation + trust.community + (100 - trust.risk)) / 6;
-}
-
-async function loadChainFixtureTxs(directory) {
-  const { readdir, readFile } = await import("node:fs/promises");
-  const files = (await readdir(directory))
-    .filter((file) => file.startsWith("tx-") && file.endsWith(".json"))
-    .sort();
-  const txs = [];
-  for (const file of files) {
-    txs.push(JSON.parse(await readFile(path.join(directory, file), "utf8")));
-  }
-  return txs;
 }
