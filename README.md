@@ -10,7 +10,7 @@ Bitcoin-rooted digital matter protocol workspace. This repository combines **BRC
 4. Expose assets, proofs, trust, interactions, and state roots through a local API.
 5. Run organic-chain, PoUW, SOC/Zipf, and Bitcoin/Signet adapter experiments offline.
 
-**60 tests pass** with no network dependency.
+**71 tests pass** with no network dependency.
 
 ## Protocol Surface
 
@@ -52,7 +52,7 @@ API: `http://127.0.0.1:8787`
 
 | Command | Purpose |
 |---------|---------|
-| `npm test` | Full test suite (60 tests) |
+| `npm test` | Full test suite (71 tests) |
 | `npm run validate` | Validate valid/life/population fixtures; reject invalid ones |
 | `npm run index` | Build v0.1/v1.0 compatible DMO state |
 | `npm run life` | Run World Engine on `fixtures/life` |
@@ -92,17 +92,27 @@ tests/                     Full test suite
 
 With `npm run api` running:
 
+**Asset / Agent layer**
+
 - `GET /health`, `/assets`, `/agents`, `/interactions`, `/events`, `/state-root`
 - `GET /assets/:id`, `/assets/:id/proofs`, `/assets/:id/trust`, `/assets/:id/interactions`
 - `GET /assets/:id/agent`, `/assets/:id/did`
 - `GET /dao/summary`, `/media/:file`
 
-Frontend views: Assets, Agents, Proofs, DAO.
+**BRC-LIFE World Engine**
+
+- `GET /life` — full world payload (`fixtures/life` by default)
+- `GET /life/:id` — single autopoietic agent with computed life arc
+- `GET /life/engine-root` — `engine_root`, `state_root`, summary
+- `GET /life?world=population` — 20-agent Zipf / criticality world
+- `GET /evolve`, `/adapt`, `/unify`, `/soc`, `/chain`, `/network`, `/mode-a` — research experiment endpoints
+
+Frontend views: Assets, Agents, **Life** (world switcher + Zipf/SOC/chain experiments), Proofs, DAO.
 
 ## Fixtures at a Glance
 
 - `fixtures/valid` — 12 events (RWA, Agent DID wallet, interactions, governance)
-- `fixtures/life` — 19 life events (3 autopoietic agents with spawn/mutation/apoptosis arcs)
+- `fixtures/life` — 16 life events (3 autopoietic agents with spawn/mutation/apoptosis arcs)
 - `fixtures/population` — 20 population create events
 - `fixtures/invalid` — 6 negative samples correctly rejected by the validator
 

@@ -4,7 +4,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { buildStateFromDirectory, loadEventsFromDirectory } from "../indexer/src/state.js";
 import { batchEvents, buildContract, createMockBitcoin, planGenesis, validateContract } from "../csv-adapter/src/index.js";
-import { computeLifeArc, runWorldEngine } from "../world-engine/src/engine.js";
+import { buildEngineRootPayload, loadLifeWorld } from "./life.js";
 import { evolveSweep, runEvolution } from "../world-engine/src/evolve.js";
 import { adaptiveDriftStudy, runAdaptiveEvolution } from "../world-engine/src/adapt.js";
 import { runUnified, unifiedDriftStudy } from "../world-engine/src/unify.js";
@@ -18,8 +18,6 @@ const port = Number(process.env.BRC_DMP_PORT || 8787);
 const host = process.env.BRC_DMP_HOST || "127.0.0.1";
 const fixtureDir = path.resolve(projectRoot, process.env.BRC_DMP_FIXTURE_DIR || "fixtures/valid");
 const lifeFixtureDir = path.resolve(projectRoot, process.env.BRC_LIFE_FIXTURE_DIR || "fixtures/life");
-const populationFixtureDir = path.resolve(projectRoot, process.env.BRC_POP_FIXTURE_DIR || "fixtures/population");
-const LIFE_WORLDS = { life: lifeFixtureDir, population: populationFixtureDir };
 
 const server = http.createServer(async (request, response) => {
   try {
@@ -42,16 +40,13 @@ const server = http.createServer(async (request, response) => {
     // BRC-LIFE World Engine routes (independent, selectable fixture worlds).
     if (url.pathname === "/life" || url.pathname.startsWith("/life/")) {
       const worldName = url.searchParams.get("world") || "life";
-      const worldDir = LIFE_WORLDS[worldName];
-      if (!worldDir) {
-        return send(response, 404, { error: "unknown_world", world: worldName, available: Object.keys(LIFE_WORLDS) });
+      const world = await loadLifeWorld(worldName, projectRoot);
+      if (world.error === "unknown_world") {
+        return send(response, 404, world);
       }
-      const lifeState = await buildStateFromDirectory(worldDir);
-      const world = buildLifeWorld(lifeState);
-      world.world = worldName;
-      world.available_worlds = Object.keys(LIFE_WORLDS);
       const lifeParts = url.pathname.split("/").filter(Boolean).map(decodeURIComponent);
       if (url.pathname === "/life") return send(response, 200, world);
+      if (lifeParts[1] === "engine-root") return send(response, 200, buildEngineRootPayload(world));
       const lifeAgent = world.agents.find((agent) => agent.id === lifeParts[1]);
       if (!lifeAgent) return send(response, 404, { error: "agent_not_found", id: lifeParts[1] });
       return send(response, 200, lifeAgent);
@@ -302,10 +297,17 @@ const server = http.createServer(async (request, response) => {
   }
 });
 
-server.listen(port, host, () => {
-  console.log(`BRC-DMP API listening on http://${host}:${port}`);
-  console.log(`Fixture directory: ${fixtureDir}`);
-});
+export { server, port, host, projectRoot };
+
+const isMain = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+
+if (isMain) {
+  server.listen(port, host, () => {
+    console.log(`BRC-DMP API listening on http://${host}:${port}`);
+    console.log(`Fixture directory: ${fixtureDir}`);
+    console.log(`Life fixture directory: ${lifeFixtureDir}`);
+  });
+}
 
 function send(response, status, body) {
   response.statusCode = status;
@@ -350,74 +352,6 @@ function collectInteractions(state) {
       privacy_level: interaction.privacy?.level || "public"
     }))
   );
-}
-
-// Run the World Engine over the life world and shape one payload the UI can
-// render without further requests: per-agent liveness verdict, full life arc,
-// genome/membrane/lineage, and the metabolism ledger.
-function buildLifeWorld(state) {
-  const world = runWorldEngine(state);
-  const reportById = new Map(world.agents.map((report) => [report.id, report]));
-  const agents = state.assets
-    .filter((asset) => asset.kind === "autopoietic_agent" && asset.metabolism)
-    .map((dmo) => {
-      const report = reportById.get(dmo.id);
-      const genome = dmo.genome || {};
-      return {
-        id: dmo.id,
-        title: dmo.subject.title,
-        generation: dmo.lineage?.generation ?? 0,
-        parent: dmo.lineage?.parent ?? null,
-        children: dmo.children ?? [],
-        status: report.status,
-        energy: report.energy,
-        delta_energy: report.delta_energy,
-        coc3: report.coc3,
-        c1_energy_work: report.c1_energy_work,
-        c2_timescale: report.c2_timescale,
-        c3_ergodicity: report.c3_ergodicity,
-        c4_topological: report.c4_topological,
-        evaluated_conditions: report.evaluated_conditions,
-        pending_conditions: report.pending_conditions,
-        recorded_death: report.recorded_death,
-        genome: {
-          M: genome.M ?? null,
-          R: genome.R ?? null,
-          phi: genome.phi ?? null,
-          has_triad: Boolean(genome.M && genome.R && genome.phi)
-        },
-        membrane_bound: Boolean(dmo.membrane?.binding),
-        metabolism: {
-          energy_genesis: dmo.metabolism.energy_genesis,
-          basal_cost_per_tick: dmo.metabolism.basal_cost_per_tick,
-          intake_total: dmo.metabolism.intake_total,
-          spend_total: dmo.metabolism.spend_total
-        },
-        ledger: dmo.metabolism.ledger,
-        actions: dmo.actions ?? [],
-        constraints: dmo.constraints ?? [],
-        mutations: dmo.genome_mutations ?? [],
-        owner: dmo.owner,
-        buc: dmo.buc,
-        arc: computeLifeArc(dmo, dmo.metabolism.genesis_tick ?? 0, world.at_tick)
-      };
-    })
-    .sort((a, b) => a.id.localeCompare(b.id));
-
-  return {
-    summary: {
-      at_tick: world.at_tick,
-      population: world.population,
-      alive: world.alive,
-      critical: world.critical,
-      dead: world.dead
-    },
-    zipf: world.zipf,
-    params: world.params,
-    engine_root: world.engine_root,
-    state_root: state.state_root,
-    agents
-  };
 }
 
 function buildDaoSummary(state) {

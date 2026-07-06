@@ -82,19 +82,46 @@ status = closed           — robust reserves, closure not collapsing
 ```
 
 C2 (time-scale separation), C3 (ergodicity) and C5 (Zipf) are declared but not yet
-evaluated (`pending_conditions`) — later milestones.
+evaluated (`pending_conditions`) — later milestones. Population worlds (`fixtures/population`)
+do evaluate C5/Zipf when `npm run life:pop` or `GET /life?world=population` is used.
 
-Output is deterministic: same indexed state + same params ⇒ same `engine_root`
-(the closure analogue of the indexer `state_root`). Multiple independent indexers
-computing the same `engine_root` is the v1.0 form of consensus (bisimulation).
+## API (World Engine exposure)
+
+With `npm run api` (default `http://127.0.0.1:8787`):
+
+| route | meaning |
+|-------|---------|
+| `GET /life` | full World Engine payload for `fixtures/life` (summary, agents, arcs, zipf, roots) |
+| `GET /life/:id` | one autopoietic agent with computed liveness verdict and life arc |
+| `GET /life/engine-root` | deterministic `engine_root` + `state_root` + summary (and Zipf when present) |
+| `GET /life?world=population` | population / Zipf world (20 agents) |
+| `GET /evolve` | dark-causality evolution experiment |
+| `GET /adapt` | changing-environment adaptation experiment |
+| `GET /unify` | unified τ≈2 coupling experiment |
+| `GET /soc` | self-organized criticality sandpile experiment |
+| `GET /chain` | organic PoUW chain experiment |
+| `GET /network` | toy P2P partition / reorg experiment |
+| `GET /mode-a` | Bitcoin-anchored seal-chain validation demo |
+
+The Plutus MVP frontend (`apps/web`) exposes a **Life** tab with world switchers for
+life fixtures, population Zipf, evolution, SOC, organic chain, and Mode A.
 
 ## Run
 
 ```bash
-npm test                 # 12 tests: v0.1 backward-compat + brc-life world engine
-npm run validate         # validates fixtures/valid + fixtures/life + rejects fixtures/invalid
+npm test                 # 71 tests: schema, indexer, world engine, API, adapters
+npm run validate         # validates fixtures/valid + fixtures/life + fixtures/population; rejects fixtures/invalid
 npm run life             # prints the life arc of every agent in fixtures/life
+npm run life:pop         # prints population / Zipf world for fixtures/population
+npm run api              # REST API + Plutus MVP frontend
 ```
+
+Fixture inventory (current):
+
+- `fixtures/valid` — 12 events
+- `fixtures/life` — 16 events
+- `fixtures/population` — 20 population create events
+- `fixtures/invalid` — 6 negative samples
 
 `npm run life` shows `cell-0001` born → forage (closed) → starve (critical) → die (broken),
 `cell-0002` spawning `cell-0003` (a visible critical dip at the spawn tick), and the
