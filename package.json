@@ -6,7 +6,7 @@
   "description": "The One Digital Matter Life Protocol / BRC-DMP (brc-dmp v0.1) + BRC-LIFE (brc-life v1.0) development workspace.",
   "scripts": {
     "test": "node --test tests/*.test.js",
-    "validate": "node packages/schema/src/cli.js fixtures/valid fixtures/life fixtures/population fixtures/invalid",
+    "validate": "node packages/schema/src/cli.js fixtures/valid fixtures/life fixtures/population fixtures/agents fixtures/invalid",
     "index": "node services/indexer/src/cli.js fixtures/valid",
     "life": "node services/world-engine/src/cli.js fixtures/life",
     "life:pop": "node services/world-engine/src/cli.js fixtures/population",
@@ -31,6 +31,7 @@
     "chain:signet:status": "BRC_CHAIN_NETWORK=signet node services/csv-adapter/src/chain-daemon.js status",
     "chain:signet:bootstrap": "BRC_CHAIN_NETWORK=signet node services/csv-adapter/src/chain-daemon.js bootstrap",
     "gen:pop": "node scripts/generate-population.mjs",
+    "agent:fixtures:signed": "node scripts/build-agent-signed-fixtures.mjs",
     "api": "node services/api/server.js"
   },
   "engines": {

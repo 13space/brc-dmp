@@ -1,0 +1,40 @@
+{
+  "p": "brc-dmp",
+  "v": "0.1",
+  "op": "rotate_key",
+  "event_id": "evt:014-rotate-agent-key-signed",
+  "dmo_id": "dmo:plutus-indexer-agent-001",
+  "buc": "btc:840008:2222222222222222222222222222222222222222222222222222222222222222:0:458",
+  "source": {
+    "chain": "bitcoin",
+    "block": 840008,
+    "txid": "2222222222222222222222222222222222222222222222222222222222222222",
+    "vout": 0,
+    "sat": "458"
+  },
+  "actor": {
+    "type": "did",
+    "id": "did:plutus:13space",
+    "label": "13space"
+  },
+  "timestamp": "2026-05-05T11:20:00.000Z",
+  "key_rotation": {
+    "revoked_key_id": "did:brc-dmp:plutus-indexer-agent-001#key-1",
+    "reason": "Signed fixture key rotation drill (production-style Schnorr proof).",
+    "new_key": {
+      "id": "did:brc-dmp:plutus-indexer-agent-001#key-2",
+      "type": "Multikey",
+      "controller": "did:brc-dmp:plutus-indexer-agent-001",
+      "publicKeyHex": "02466d7fcae563e5cb09a0d1870bb580344804617879a14949cf22285f1bae3f27",
+      "publicKeyMultibase": "z6MkfixtureAgentKey222222222222222222222222222222222",
+      "status": "active"
+    },
+    "proof_hash": "sha256:f06653b24c6340e0595dbdd7602eac34a50aab6b4c370f5eb97af45d3d2ba25d",
+    "signature_proof": {
+      "scheme": "schnorr-bip340",
+      "message": "BRC-DMP rotate_key v1\ndmo:plutus-indexer-agent-001\nevt:014-rotate-agent-key-signed\ndid:brc-dmp:plutus-indexer-agent-001#key-1\ndid:brc-dmp:plutus-indexer-agent-001#key-2\nf06653b24c6340e0595dbdd7602eac34a50aab6b4c370f5eb97af45d3d2ba25d",
+      "signature": "061cee4d773b7d658bb483221839eaa51140be5c1a7d2095debe1a87d8aeeda82ea0f377e6bd460ace09551a5c31a167926a4162c73492b7d9f919677327c13d",
+      "public_key": "466d7fcae563e5cb09a0d1870bb580344804617879a14949cf22285f1bae3f27"
+    }
+  }
+}

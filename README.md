@@ -10,7 +10,7 @@ Bitcoin-rooted digital matter protocol workspace. This repository combines **BRC
 4. Expose assets, proofs, trust, interactions, and state roots through a local API.
 5. Run organic-chain, PoUW, SOC/Zipf, and Bitcoin/Signet adapter experiments offline.
 
-**92 tests pass** with no network dependency.
+**93 tests pass** with no network dependency.
 
 ## Protocol Surface
 
@@ -52,7 +52,7 @@ API: `http://127.0.0.1:8787`
 
 | Command | Purpose |
 |---------|---------|
-| `npm test` | Full test suite (92 tests) |
+| `npm test` | Full test suite (93 tests) |
 | `npm run validate` | Validate valid/life/population fixtures; reject invalid ones |
 | `npm run index` | Build v0.1/v1.0 compatible DMO state |
 | `npm run life` | Run World Engine on `fixtures/life` |
@@ -65,7 +65,7 @@ API: `http://127.0.0.1:8787`
 | `npm run chain` | Organic chain experiment CLI |
 | `npm run network` | Network partition / reorg experiment CLI |
 | `npm run csv` | CSV / OP_RETURN adapter CLI |
-| `npm run csv:signet` | Signet adapter CLI |
+| `npm run agent:fixtures:signed` | Regenerate signed agent wallet fixtures (013/014) |
 | `npm run chain:scan` | Scan committed `fixtures/chain/tx-*.json` into indexed state |
 | `npm run chain:fixtures` | Regenerate chain tx fixtures from protocol events |
 | `npm run chain:ingest:fixtures` | Persist fixture scan into `.tmp/chain-ingest/fixtures/state.json` |
@@ -84,6 +84,7 @@ API: `http://127.0.0.1:8787`
 apps/web/                  Plutus MVP frontend (served by services/api)
 docs/                      Architecture, vision, v0.1/v1.0 protocol drafts, handoff
 fixtures/valid/            v0.1 assets, RWA, Agent, proof, governance samples
+fixtures/agents/           Production-style signed bind_wallet / rotate_key samples
 fixtures/life/             BRC-LIFE life-event samples
 fixtures/population/       20 population samples for Zipf / criticality
 fixtures/invalid/          Negative samples for rejection rules

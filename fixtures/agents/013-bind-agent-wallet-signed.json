@@ -1,0 +1,36 @@
+{
+  "p": "brc-dmp",
+  "v": "0.1",
+  "op": "bind_wallet",
+  "event_id": "evt:013-bind-agent-wallet-signed",
+  "dmo_id": "dmo:plutus-indexer-agent-001",
+  "buc": "btc:840007:1111111111111111111111111111111111111111111111111111111111111111:0:457",
+  "source": {
+    "chain": "bitcoin",
+    "block": 840007,
+    "txid": "1111111111111111111111111111111111111111111111111111111111111111",
+    "vout": 0,
+    "sat": "457"
+  },
+  "actor": {
+    "type": "did",
+    "id": "did:plutus:13space",
+    "label": "13space"
+  },
+  "timestamp": "2026-05-05T11:10:00.000Z",
+  "wallet_binding": {
+    "type": "agent_wallet",
+    "id": "agent-wallet:plutus-indexer-fees-001",
+    "address": "bc1ql3e9pgs3mmwuwrh95fecme0s0qtn2880lsvsd5",
+    "purpose": "fees",
+    "bound_at": "2026-05-05T11:10:00.000Z",
+    "status": "active",
+    "proof_hash": "sha256:a55de0312847c27c65c859cccb24e095b467ea2ee6c42b1c0c4e96d52c48fb95",
+    "signature_proof": {
+      "scheme": "bip322-simple",
+      "message": "BRC-DMP bind_wallet v1\ndmo:plutus-indexer-agent-001\nevt:013-bind-agent-wallet-signed\nbc1ql3e9pgs3mmwuwrh95fecme0s0qtn2880lsvsd5\nfees\n327cd575e05c8eb73be143a2577554fc421eeef3de8e47916fc4d466179100cf",
+      "signature": "AkgwRQIhAMlN0DIjuntK52VI05QuAl0YzK58iIqHceYqLfj02vGfAiBOJzHGoDJBYGL7BIX2BRlDZ+S/Xl0UhFYn97GgXaG9XwEhA081W9y3zAr3KO88zrlhXZBoS7Wyyl+FmrDwtwQHWHGq",
+      "public_key": "034f355bdcb7cc0af728ef3cceb9615d90684bb5b2ca5f859ab0f0b704075871aa"
+    }
+  }
+}

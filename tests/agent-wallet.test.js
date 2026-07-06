@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 import test from "node:test";
 import { randomBytes } from "node:crypto";
 import { hashObject } from "../packages/schema/src/canonicalize.js";
@@ -94,6 +95,17 @@ test("signed bind_wallet fixtures validate and verify end-to-end", () => {
   event.wallet_binding.signature_proof = signEcdsaLegacy(bindWalletMessage(event), priv);
   assertValidEvent(event);
   assert.equal(verifyAgentEvent(event).verified, true);
+});
+
+test("committed production-style signed agent fixtures verify", async () => {
+  const bind = JSON.parse(await readFile("fixtures/agents/013-bind-agent-wallet-signed.json", "utf8"));
+  const rotate = JSON.parse(await readFile("fixtures/agents/014-rotate-agent-key-signed.json", "utf8"));
+  assertValidEvent(bind);
+  assertValidEvent(rotate);
+  assert.equal(verifyAgentEvent(bind).verified, true);
+  assert.equal(verifyAgentEvent(bind).scheme, "bip322-simple");
+  assert.equal(verifyAgentEvent(rotate).verified, true);
+  assert.equal(verifyAgentEvent(rotate).scheme, "schnorr-bip340");
 });
 
 function makeBindWalletEvent() {
