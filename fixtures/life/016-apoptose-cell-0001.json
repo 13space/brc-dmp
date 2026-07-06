@@ -1,0 +1,22 @@
+{
+  "p": "brc-life",
+  "v": "1.0",
+  "op": "apoptose",
+  "event_id": "evt:life-016-apoptose-cell-0001",
+  "dmo_id": "dmo:genesis-cell-0001",
+  "buc": "btc:905010:0000000000000000000000000000000000000000000000000000000000000000:0:1000",
+  "tick": 905010,
+  "source": {
+    "chain": "bitcoin",
+    "block": 905010,
+    "txid": "0000000000000000000000000000000000000000000000000000000000000000",
+    "vout": 0,
+    "sat": "1000"
+  },
+  "actor": { "type": "ai_agent", "id": "did:brc-life:world-engine", "label": "World Engine" },
+  "timestamp": "2026-06-03T01:40:00.000Z",
+  "death": {
+    "reason": "energy reserves exhausted and energy-work closure (C1) broke; constraint closure no longer maintained",
+    "triggered_by": "world_engine"
+  }
+}

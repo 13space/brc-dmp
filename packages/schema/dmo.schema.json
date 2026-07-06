@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://brc-dmp.local/schema/dmo.schema.json",
+  "title": "BRC-DMP Digital Matter Object",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "p", "v", "buc", "kind", "source", "subject", "owner", "metadata", "proofs", "trust", "history"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^dmo:[a-z0-9][a-z0-9:_-]{2,127}$" },
+    "p": { "const": "brc-dmp" },
+    "v": { "const": "0.1" },
+    "buc": { "type": "string" },
+    "kind": {
+      "enum": [
+        "digital_matter",
+        "ordinal_art",
+        "rwa_art",
+        "sft_fraction",
+        "did_badge",
+        "dao_position",
+        "agent_identity",
+        "interaction_proof"
+      ]
+    },
+    "source": { "$ref": "events/event.schema.json#/$defs/source" },
+    "subject": { "$ref": "events/event.schema.json#/$defs/subject" },
+    "owner": { "$ref": "events/event.schema.json#/$defs/party" },
+    "metadata": { "$ref": "events/event.schema.json#/$defs/metadata" },
+    "metadata_history": {
+      "type": "array",
+      "items": { "type": "object" }
+    },
+    "proofs": {
+      "type": "array",
+      "items": { "$ref": "events/event.schema.json#/$defs/proof" }
+    },
+    "trust": { "$ref": "events/event.schema.json#/$defs/trustVector" },
+    "fractions": {
+      "type": "array",
+      "items": { "type": "object" }
+    },
+    "anchors": {
+      "type": "array",
+      "items": { "type": "object" }
+    },
+    "interactions": {
+      "type": "array",
+      "items": { "$ref": "events/event.schema.json#/$defs/interaction" }
+    },
+    "agent": {
+      "type": ["object", "null"],
+      "properties": {
+        "did_document": { "type": ["object", "null"] },
+        "wallets": { "type": "array" },
+        "keys": { "type": "array" },
+        "permissions": { "type": "array" },
+        "behavior_scope": { "type": "object" },
+        "interaction_privacy": { "type": "object" },
+        "wallet_history": { "type": "array" },
+        "key_history": { "type": "array" },
+        "policy_history": { "type": "array" }
+      }
+    },
+    "history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["event_id", "op", "timestamp", "event_hash"],
+        "properties": {
+          "event_id": { "type": "string" },
+          "op": { "type": "string" },
+          "timestamp": { "type": "string", "format": "date-time" },
+          "event_hash": { "$ref": "events/event.schema.json#/$defs/hashRef" }
+        }
+      }
+    }
+  }
+}

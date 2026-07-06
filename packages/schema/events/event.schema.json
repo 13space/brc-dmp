@@ -1,0 +1,181 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://brc-dmp.local/schema/events/event.schema.json",
+  "title": "BRC-DMP Event",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["p", "v", "op", "event_id", "dmo_id", "buc", "source", "actor", "timestamp"],
+  "properties": {
+    "p": { "const": "brc-dmp" },
+    "v": { "const": "0.1" },
+    "op": {
+      "enum": [
+        "create",
+        "transfer",
+        "update_metadata",
+        "attest_trust",
+        "fractionalize",
+        "anchor_state",
+        "record_interaction",
+        "bind_wallet",
+        "rotate_key",
+        "set_agent_policy"
+      ]
+    },
+    "event_id": { "type": "string", "pattern": "^evt:[a-z0-9][a-z0-9:_-]{2,127}$" },
+    "dmo_id": { "type": "string", "pattern": "^dmo:[a-z0-9][a-z0-9:_-]{2,127}$" },
+    "buc": { "type": "string" },
+    "source": { "$ref": "#/$defs/source" },
+    "actor": { "$ref": "#/$defs/party" },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "signature": { "$ref": "#/$defs/signature" }
+  },
+  "$defs": {
+    "hashRef": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["chain", "block", "txid", "vout"],
+      "properties": {
+        "chain": { "enum": ["bitcoin", "ckb", "rgbpp", "fixture"] },
+        "block": { "type": "integer", "minimum": 0 },
+        "txid": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+        "vout": { "type": "integer", "minimum": 0 },
+        "sat": { "type": "string" },
+        "inscription_id": { "type": "string" }
+      }
+    },
+    "party": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["type", "id"],
+      "properties": {
+        "type": {
+          "enum": [
+            "bitcoin_address",
+            "did",
+            "agent_wallet",
+            "ai_agent",
+            "institution",
+            "contract",
+            "human"
+          ]
+        },
+        "id": { "type": "string", "minLength": 3 },
+        "address": { "type": "string" },
+        "label": { "type": "string" }
+      }
+    },
+    "subject": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["title", "category"],
+      "properties": {
+        "title": { "type": "string", "minLength": 1 },
+        "creator": { "type": "string" },
+        "category": { "type": "string", "minLength": 1 },
+        "external_ref": { "type": "string" },
+        "description": { "type": "string" }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["uri", "hash"],
+      "properties": {
+        "uri": { "type": "string", "minLength": 1 },
+        "hash": { "$ref": "#/$defs/hashRef" },
+        "mime": { "type": "string" }
+      }
+    },
+    "proof": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["type", "issuer", "hash"],
+      "properties": {
+        "type": { "type": "string", "minLength": 1 },
+        "issuer": { "type": "string", "minLength": 3 },
+        "hash": { "$ref": "#/$defs/hashRef" },
+        "uri": { "type": "string" },
+        "issued_at": { "type": "string", "format": "date-time" },
+        "summary": { "type": "string" }
+      }
+    },
+    "trustVector": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "authenticity": { "type": "number", "minimum": 0, "maximum": 100 },
+        "provenance": { "type": "number", "minimum": 0, "maximum": 100 },
+        "market": { "type": "number", "minimum": 0, "maximum": 100 },
+        "curation": { "type": "number", "minimum": 0, "maximum": 100 },
+        "community": { "type": "number", "minimum": 0, "maximum": 100 },
+        "risk": { "type": "number", "minimum": 0, "maximum": 100 }
+      }
+    },
+    "trustDelta": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "authenticity": { "type": "number", "minimum": -100, "maximum": 100 },
+        "provenance": { "type": "number", "minimum": -100, "maximum": 100 },
+        "market": { "type": "number", "minimum": -100, "maximum": 100 },
+        "curation": { "type": "number", "minimum": -100, "maximum": 100 },
+        "community": { "type": "number", "minimum": -100, "maximum": 100 },
+        "risk": { "type": "number", "minimum": -100, "maximum": 100 }
+      }
+    },
+    "interaction": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["interaction_id", "channel", "participants", "summary", "occurred_at", "proof_hash"],
+      "properties": {
+        "interaction_id": { "type": "string", "pattern": "^ix:[a-z0-9][a-z0-9:_-]{2,127}$" },
+        "channel": { "enum": ["wallet", "agent", "dao", "market", "api", "physical"] },
+        "participants": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "$ref": "#/$defs/party" }
+        },
+        "summary": { "type": "string", "minLength": 1 },
+        "occurred_at": { "type": "string", "format": "date-time" },
+        "input_hash": { "$ref": "#/$defs/hashRef" },
+        "output_hash": { "$ref": "#/$defs/hashRef" },
+        "transcript_hash": { "$ref": "#/$defs/hashRef" },
+        "tool_trace_hash": { "$ref": "#/$defs/hashRef" },
+        "proof_uri": { "type": "string" },
+        "proof_hash": { "$ref": "#/$defs/hashRef" },
+        "privacy": { "$ref": "#/$defs/privacy" },
+        "related_assets": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^dmo:[a-z0-9][a-z0-9:_-]{2,127}$" }
+        }
+      }
+    },
+    "privacy": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["level"],
+      "properties": {
+        "level": {
+          "enum": ["public", "selective", "private_hash", "zk_commitment"]
+        },
+        "disclosure": { "type": "string" },
+        "redaction_hash": { "$ref": "#/$defs/hashRef" }
+      }
+    },
+    "signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scheme", "public_key", "signature"],
+      "properties": {
+        "scheme": { "enum": ["bip322", "schnorr", "ecdsa", "ed25519"] },
+        "public_key": { "type": "string", "minLength": 16 },
+        "signature": { "type": "string", "minLength": 16 }
+      }
+    }
+  }
+}

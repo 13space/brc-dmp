@@ -1,0 +1,26 @@
+{
+  "p": "brc-life",
+  "v": "1.0",
+  "op": "act",
+  "event_id": "evt:life-023-act-cell-0002",
+  "dmo_id": "dmo:genesis-cell-0002",
+  "buc": "btc:905001:4444444444444444444444444444444444444444444444444444444444444444:0:2000",
+  "tick": 905001,
+  "source": {
+    "chain": "bitcoin",
+    "block": 905001,
+    "txid": "4444444444444444444444444444444444444444444444444444444444444444",
+    "vout": 0,
+    "sat": "2000"
+  },
+  "actor": { "type": "agent_wallet", "id": "agent-wallet:genesis-cell-0002", "address": "bc1pcell0002000000000000000000000000000000000" },
+  "timestamp": "2026-06-03T00:10:00.000Z",
+  "causal_tag": "dark",
+  "energy_cost": 20,
+  "action": {
+    "kind": "forage",
+    "summary": "spent energy to actively forage the niche for a larger intake",
+    "target": "dmo:niche-substrate-0001",
+    "proof_hash": "sha256:5656565656565656565656565656565656565656565656565656565656565656"
+  }
+}

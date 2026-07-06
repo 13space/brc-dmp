@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Plutus BRC-DMP Lab</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <h1>Plutus BRC-DMP Lab</h1>
+        <p id="stateRoot">Loading state root...</p>
+      </div>
+      <nav>
+        <button class="nav-tab active" data-view="assets" type="button">Assets</button>
+        <button class="nav-tab" data-view="agents" type="button">Agents</button>
+        <button class="nav-tab" data-view="life" type="button">Life</button>
+        <button class="nav-tab" data-view="proofs" type="button">Proofs</button>
+        <button class="nav-tab" data-view="dao" type="button">DAO</button>
+        <button id="refreshButton" type="button">Refresh</button>
+      </nav>
+    </header>
+
+    <main class="shell">
+      <section id="summary" class="summary-grid"></section>
+      <section id="content"></section>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

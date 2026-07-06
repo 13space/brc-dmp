@@ -1,0 +1,27 @@
+{
+  "p": "brc-dmp",
+  "v": "0.1",
+  "op": "anchor_state",
+  "event_id": "evt:006-anchor-agent-state",
+  "dmo_id": "dmo:plutus-indexer-agent-001",
+  "buc": "btc:840005:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff:0:455",
+  "source": {
+    "chain": "bitcoin",
+    "block": 840005,
+    "txid": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "vout": 0,
+    "sat": "455"
+  },
+  "actor": {
+    "type": "ai_agent",
+    "id": "dmo:plutus-indexer-agent-001",
+    "label": "Plutus Indexer Agent Genesis"
+  },
+  "timestamp": "2026-05-05T10:40:00.000Z",
+  "anchor": {
+    "layer": "indexer",
+    "state_root": "sha256:abababababababababababababababababababababababababababababababab",
+    "height": 6,
+    "uri": "ipfs://brc-dmp-fixtures/state-roots/height-6.json"
+  }
+}

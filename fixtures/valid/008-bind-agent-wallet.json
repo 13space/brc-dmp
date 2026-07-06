@@ -1,0 +1,30 @@
+{
+  "p": "brc-dmp",
+  "v": "0.1",
+  "op": "bind_wallet",
+  "event_id": "evt:008-bind-agent-wallet",
+  "dmo_id": "dmo:plutus-indexer-agent-001",
+  "buc": "btc:840007:1111111111111111111111111111111111111111111111111111111111111111:0:457",
+  "source": {
+    "chain": "bitcoin",
+    "block": 840007,
+    "txid": "1111111111111111111111111111111111111111111111111111111111111111",
+    "vout": 0,
+    "sat": "457"
+  },
+  "actor": {
+    "type": "did",
+    "id": "did:plutus:13space",
+    "label": "13space"
+  },
+  "timestamp": "2026-05-05T11:10:00.000Z",
+  "wallet_binding": {
+    "type": "agent_wallet",
+    "id": "agent-wallet:plutus-indexer-fees-001",
+    "address": "bc1qagentfees000000000000000000000000000000",
+    "purpose": "fees",
+    "proof_hash": "sha256:1212121212121212121212121212121212121212121212121212121212121212",
+    "bound_at": "2026-05-05T11:10:00.000Z",
+    "status": "active"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "p": "brc-life",
+  "v": "1.0",
+  "op": "spawn",
+  "event_id": "evt:life-025-spawn-cell-0002-to-0003",
+  "dmo_id": "dmo:genesis-cell-0002",
+  "buc": "btc:905002:6666666666666666666666666666666666666666666666666666666666666666:0:2000",
+  "tick": 905002,
+  "source": {
+    "chain": "bitcoin",
+    "block": 905002,
+    "txid": "6666666666666666666666666666666666666666666666666666666666666666",
+    "vout": 0,
+    "sat": "2000"
+  },
+  "actor": { "type": "agent_wallet", "id": "agent-wallet:genesis-cell-0002", "address": "bc1pcell0002000000000000000000000000000000000" },
+  "timestamp": "2026-06-03T00:20:00.000Z",
+  "child": {
+    "dmo_id": "dmo:genesis-cell-0003",
+    "buc": "btc:905002:6363636363636363636363636363636363636363636363636363636363636363:0:3000",
+    "energy_endowment": 100,
+    "title": "Genesis Cell 0003",
+    "mutation": {
+      "operator": "param_perturb",
+      "target": "genome.M.forage_rate",
+      "note": "+8% intake efficiency inherited variation"
+    }
+  }
+}

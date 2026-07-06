@@ -1,0 +1,26 @@
+{
+  "p": "brc-dmp",
+  "v": "0.1",
+  "op": "transfer",
+  "event_id": "evt:007-transfer-rwa",
+  "dmo_id": "dmo:the-one-rwa-001",
+  "buc": "btc:840006:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef:1:456",
+  "source": {
+    "chain": "bitcoin",
+    "block": 840006,
+    "txid": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+    "vout": 1,
+    "sat": "456"
+  },
+  "actor": {
+    "type": "bitcoin_address",
+    "id": "bc1qtheoneowner000000000000000000000000000",
+    "address": "bc1qtheoneowner000000000000000000000000000"
+  },
+  "timestamp": "2026-05-05T11:00:00.000Z",
+  "to_owner": {
+    "type": "bitcoin_address",
+    "id": "bc1qcollector000000000000000000000000000000",
+    "address": "bc1qcollector000000000000000000000000000000"
+  }
+}

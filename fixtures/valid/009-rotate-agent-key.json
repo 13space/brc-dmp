@@ -1,0 +1,32 @@
+{
+  "p": "brc-dmp",
+  "v": "0.1",
+  "op": "rotate_key",
+  "event_id": "evt:009-rotate-agent-key",
+  "dmo_id": "dmo:plutus-indexer-agent-001",
+  "buc": "btc:840008:2222222222222222222222222222222222222222222222222222222222222222:0:458",
+  "source": {
+    "chain": "bitcoin",
+    "block": 840008,
+    "txid": "2222222222222222222222222222222222222222222222222222222222222222",
+    "vout": 0,
+    "sat": "458"
+  },
+  "actor": {
+    "type": "did",
+    "id": "did:plutus:13space",
+    "label": "13space"
+  },
+  "timestamp": "2026-05-05T11:20:00.000Z",
+  "key_rotation": {
+    "revoked_key_id": "did:brc-dmp:plutus-indexer-agent-001#key-1",
+    "reason": "Fixture key rotation drill before live Ordinals indexing.",
+    "new_key": {
+      "id": "did:brc-dmp:plutus-indexer-agent-001#key-2",
+      "type": "Multikey",
+      "controller": "did:brc-dmp:plutus-indexer-agent-001",
+      "publicKeyMultibase": "z6MkfixtureAgentKey222222222222222222222222222222222",
+      "status": "active"
+    }
+  }
+}

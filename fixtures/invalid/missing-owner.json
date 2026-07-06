@@ -1,0 +1,29 @@
+{
+  "p": "brc-dmp",
+  "v": "0.1",
+  "op": "create",
+  "event_id": "evt:invalid-missing-owner",
+  "dmo_id": "dmo:missing-owner",
+  "buc": "btc:840101:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb:0:501",
+  "source": {
+    "chain": "bitcoin",
+    "block": 840101,
+    "txid": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "vout": 0,
+    "sat": "501"
+  },
+  "actor": {
+    "type": "did",
+    "id": "did:plutus:13space"
+  },
+  "timestamp": "2026-05-05T12:10:00.000Z",
+  "kind": "rwa_art",
+  "subject": {
+    "title": "Invalid Asset",
+    "category": "fine_art"
+  },
+  "metadata": {
+    "uri": "ipfs://missing-owner",
+    "hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "template": "brc-dmp-rwa-asset-v0.1",
+  "required_event_op": "create",
+  "kind": "rwa_art",
+  "subject": {
+    "title": "Human readable asset name",
+    "creator": "Creator, studio, registry, or custodian",
+    "category": "fine_art | antique | collectible | industrial_collectible | certificate",
+    "description": "Plain-language description for buyers, curators, and indexers.",
+    "physical_fingerprint": {
+      "medium": "material or form",
+      "dimensions": "physical dimensions if available",
+      "mass": "mass if relevant",
+      "visible_marks": ["serial number", "signature", "seal"],
+      "capture_hashes": ["sha256:<photo-or-scan-hash>"]
+    }
+  },
+  "owner": {
+    "type": "bitcoin_address",
+    "id": "bc1...",
+    "address": "bc1..."
+  },
+  "metadata": {
+    "uri": "ipfs://.../metadata.json",
+    "hash": "sha256:<metadata-json-hash>",
+    "image_uri": "ipfs://... or /media/example.svg",
+    "certificate_uri": "ipfs://.../certificate.json",
+    "risk": {
+      "level": "low | medium | high",
+      "summary": "Custody, authenticity, legal, and market caveats."
+    }
+  },
+  "proofs": [
+    {
+      "type": "rwa_certificate | custody_statement | appraisal | risk_disclosure",
+      "issuer": "did:...",
+      "hash": "sha256:<proof-document-hash>",
+      "uri": "ipfs://.../proof.json",
+      "summary": "What this proof establishes and what it does not establish."
+    }
+  ]
+}

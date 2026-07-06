@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://brc-dmp.local/schema/events/anchor_state.schema.json",
+  "allOf": [
+    { "$ref": "event.schema.json" },
+    {
+      "type": "object",
+      "required": ["anchor"],
+      "properties": {
+        "op": { "const": "anchor_state" },
+        "anchor": {
+          "type": "object",
+          "required": ["layer", "state_root"],
+          "properties": {
+            "layer": { "enum": ["indexer", "rgbpp", "ckb", "ipfs", "arweave"] },
+            "state_root": { "$ref": "event.schema.json#/$defs/hashRef" },
+            "height": { "type": "integer", "minimum": 0 },
+            "uri": { "type": "string" }
+          }
+        }
+      }
+    }
+  ]
+}

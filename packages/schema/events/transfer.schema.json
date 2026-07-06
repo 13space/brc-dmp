@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://brc-dmp.local/schema/events/transfer.schema.json",
+  "allOf": [
+    { "$ref": "event.schema.json" },
+    {
+      "type": "object",
+      "required": ["to_owner"],
+      "properties": {
+        "op": { "const": "transfer" },
+        "to_owner": { "$ref": "event.schema.json#/$defs/party" }
+      }
+    }
+  ]
+}

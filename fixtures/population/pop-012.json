@@ -1,0 +1,63 @@
+{
+  "p": "brc-life",
+  "v": "1.0",
+  "op": "create",
+  "event_id": "evt:pop-create-pop-cell-012",
+  "dmo_id": "dmo:pop-cell-012",
+  "buc": "btc:905000:3943b4fcca59bec09e34a3d5383c65a063a2fda0cfe8003b832e821c077d5fd8:0:20012",
+  "tick": 905000,
+  "source": {
+    "chain": "bitcoin",
+    "block": 905000,
+    "txid": "3943b4fcca59bec09e34a3d5383c65a063a2fda0cfe8003b832e821c077d5fd8",
+    "vout": 0,
+    "sat": "20012"
+  },
+  "actor": {
+    "type": "did",
+    "id": "did:plutus:13space",
+    "label": "13space"
+  },
+  "timestamp": "2026-06-03T00:00:00.000Z",
+  "kind": "autopoietic_agent",
+  "subject": {
+    "title": "Pop Cell 012",
+    "creator": "13space",
+    "category": "autopoietic_agent",
+    "description": "Population organism rank 12; genesis energy follows a Zipf r^-2 curve."
+  },
+  "owner": {
+    "type": "agent_wallet",
+    "id": "agent-wallet:pop-cell-012",
+    "address": "bc1ppop01200000000000000000000000000000000000"
+  },
+  "metadata": {
+    "uri": "ipfs://brc-life-fixtures/population/pop-cell-012.json",
+    "hash": "sha256:20a0c12b93a455038ee8e05423dbd721ab39d33954271cd002b3a99afdf10d70",
+    "mime": "application/json"
+  },
+  "genome": {
+    "M": "ref://genome/M/forage-and-convert-energy",
+    "R": "ref://genome/R/repair-and-replicate-components",
+    "phi": "ref://genome/phi/organization-map-that-reproduces-R",
+    "inscription": "btc:905000:sat:20012",
+    "hash": "sha256:6986947222234757037e38849cfc774c5c1d860c84d629e58c16dddff353090d",
+    "lineage": {
+      "parent": null,
+      "generation": 0
+    }
+  },
+  "membrane": {
+    "binding": "rgbpp:cell:pop-cell-012:outpoint-0",
+    "boundary_hash": "sha256:2c6ca7c4508ba6eb80b1675b8f12c1bc133c794cd3a02dc0f1adcde79ef7449d",
+    "permeability": {
+      "energy_in": true,
+      "signal_in": true,
+      "matter_out": "controlled"
+    }
+  },
+  "metabolism": {
+    "energy": 222,
+    "basal_cost_per_tick": 1
+  }
+}

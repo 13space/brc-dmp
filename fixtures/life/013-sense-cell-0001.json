@@ -1,0 +1,24 @@
+{
+  "p": "brc-life",
+  "v": "1.0",
+  "op": "sense",
+  "event_id": "evt:life-013-sense-cell-0001",
+  "dmo_id": "dmo:genesis-cell-0001",
+  "buc": "btc:905001:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd:0:1000",
+  "tick": 905001,
+  "source": {
+    "chain": "bitcoin",
+    "block": 905001,
+    "txid": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "vout": 0,
+    "sat": "1000"
+  },
+  "actor": { "type": "agent_wallet", "id": "agent-wallet:genesis-cell-0001", "address": "bc1pcell0001000000000000000000000000000000000" },
+  "timestamp": "2026-06-03T00:10:30.000Z",
+  "causal_tag": "pos",
+  "observation": {
+    "channel": "market",
+    "summary": "sensed available niche energy and current fee pressure",
+    "state_hash": "sha256:6666666666666666666666666666666666666666666666666666666666666666"
+  }
+}

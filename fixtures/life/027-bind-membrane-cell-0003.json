@@ -1,0 +1,23 @@
+{
+  "p": "brc-life",
+  "v": "1.0",
+  "op": "bind_membrane",
+  "event_id": "evt:life-027-bind-membrane-cell-0003",
+  "dmo_id": "dmo:genesis-cell-0003",
+  "buc": "btc:905003:2727272727272727272727272727272727272727272727272727272727272727:0:3000",
+  "tick": 905003,
+  "source": {
+    "chain": "bitcoin",
+    "block": 905003,
+    "txid": "2727272727272727272727272727272727272727272727272727272727272727",
+    "vout": 0,
+    "sat": "3000"
+  },
+  "actor": { "type": "agent_wallet", "id": "agent-wallet:genesis-cell-0002", "address": "bc1pcell0002000000000000000000000000000000000" },
+  "timestamp": "2026-06-03T00:30:10.000Z",
+  "membrane": {
+    "binding": "rgbpp:cell:genesis-cell-0003:outpoint-0",
+    "boundary_hash": "sha256:2929292929292929292929292929292929292929292929292929292929292929",
+    "permeability": { "energy_in": true, "signal_in": true, "matter_out": "controlled" }
+  }
+}

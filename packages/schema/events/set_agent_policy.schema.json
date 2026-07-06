@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://brc-dmp.local/schema/events/set_agent_policy.schema.json",
+  "allOf": [
+    { "$ref": "event.schema.json" },
+    {
+      "type": "object",
+      "required": ["agent_policy"],
+      "properties": {
+        "op": { "const": "set_agent_policy" },
+        "agent_policy": {
+          "type": "object",
+          "properties": {
+            "permissions": { "type": "array" },
+            "behavior_scope": { "type": "object" },
+            "interaction_privacy": { "type": "object" }
+          }
+        }
+      }
+    }
+  ]
+}

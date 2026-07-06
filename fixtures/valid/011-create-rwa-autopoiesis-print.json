@@ -1,0 +1,68 @@
+{
+  "p": "brc-dmp",
+  "v": "0.1",
+  "op": "create",
+  "event_id": "evt:011-create-rwa-autopoiesis-print",
+  "dmo_id": "dmo:rwa-autopoiesis-print-001",
+  "buc": "btc:840010:4444444444444444444444444444444444444444444444444444444444444444:0:460",
+  "source": {
+    "chain": "bitcoin",
+    "block": 840010,
+    "txid": "4444444444444444444444444444444444444444444444444444444444444444",
+    "vout": 0,
+    "sat": "460"
+  },
+  "actor": {
+    "type": "did",
+    "id": "did:plutus:13space",
+    "label": "13space"
+  },
+  "timestamp": "2026-05-05T12:00:00.000Z",
+  "kind": "rwa_art",
+  "subject": {
+    "title": "Autopoiesis Diagram Print",
+    "creator": "13space Studio",
+    "category": "research_artifact",
+    "description": "Semi-real RWA template for a signed diagram print tied to digital matter research.",
+    "physical_fingerprint": {
+      "medium": "archival pigment print",
+      "dimensions": "420mm x 297mm",
+      "edition": "AP 1/3",
+      "visible_marks": ["lower-right graphite signature", "reverse QR label"]
+    }
+  },
+  "owner": {
+    "type": "bitcoin_address",
+    "id": "bc1qrwaautopoiesisowner00000000000000000000",
+    "address": "bc1qrwaautopoiesisowner00000000000000000000"
+  },
+  "metadata": {
+    "uri": "ipfs://brc-dmp-rwa/autopoiesis-print/metadata.json",
+    "hash": "sha256:4545454545454545454545454545454545454545454545454545454545454545",
+    "mime": "application/json",
+    "image_uri": "/media/rwa-autopoiesis-print.svg",
+    "certificate_uri": "ipfs://brc-dmp-rwa/autopoiesis-print/certificate.json",
+    "risk": {
+      "level": "medium",
+      "summary": "Fixture certificate only; no independent physical custody audit yet."
+    }
+  },
+  "proofs": [
+    {
+      "type": "rwa_certificate",
+      "issuer": "did:plutus:studio-registry",
+      "hash": "sha256:4646464646464646464646464646464646464646464646464646464646464646",
+      "uri": "ipfs://brc-dmp-rwa/autopoiesis-print/certificate.json",
+      "issued_at": "2026-05-05T12:00:00.000Z",
+      "summary": "Studio certificate for the physical print and edition mark."
+    }
+  ],
+  "trust": {
+    "authenticity": 35,
+    "provenance": 25,
+    "market": 0,
+    "curation": 20,
+    "community": 0,
+    "risk": 45
+  }
+}

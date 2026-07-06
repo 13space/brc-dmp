@@ -1,0 +1,76 @@
+{
+  "p": "brc-dmp",
+  "v": "0.1",
+  "op": "create",
+  "event_id": "evt:012-create-rwa-mineral-sample",
+  "dmo_id": "dmo:rwa-nickel-core-sample-001",
+  "buc": "btc:840011:5555555555555555555555555555555555555555555555555555555555555555:0:461",
+  "source": {
+    "chain": "bitcoin",
+    "block": 840011,
+    "txid": "5555555555555555555555555555555555555555555555555555555555555555",
+    "vout": 0,
+    "sat": "461"
+  },
+  "actor": {
+    "type": "institution",
+    "id": "did:plutus:rwa-lab",
+    "label": "Plutus RWA Lab"
+  },
+  "timestamp": "2026-05-05T12:20:00.000Z",
+  "kind": "rwa_art",
+  "subject": {
+    "title": "Nickel Core Provenance Sample",
+    "creator": "Plutus RWA Lab",
+    "category": "industrial_collectible",
+    "description": "Semi-real RWA template for a sealed mineral provenance sample.",
+    "physical_fingerprint": {
+      "medium": "sealed nickel core sample",
+      "mass": "184g",
+      "container": "tamper-evident acrylic capsule",
+      "visible_marks": ["laser label NCS-001", "capsule seal serial P-RWA-0001"]
+    }
+  },
+  "owner": {
+    "type": "bitcoin_address",
+    "id": "bc1qrwanickelowner0000000000000000000000000",
+    "address": "bc1qrwanickelowner0000000000000000000000000"
+  },
+  "metadata": {
+    "uri": "ipfs://brc-dmp-rwa/nickel-core-sample/metadata.json",
+    "hash": "sha256:5656565656565656565656565656565656565656565656565656565656565656",
+    "mime": "application/json",
+    "image_uri": "/media/rwa-nickel-core-sample.svg",
+    "certificate_uri": "ipfs://brc-dmp-rwa/nickel-core-sample/certificate.json",
+    "risk": {
+      "level": "high",
+      "summary": "Commodity provenance and custody chain require external audit before real financing use."
+    }
+  },
+  "proofs": [
+    {
+      "type": "custody_statement",
+      "issuer": "did:plutus:rwa-lab",
+      "hash": "sha256:5757575757575757575757575757575757575757575757575757575757575757",
+      "uri": "ipfs://brc-dmp-rwa/nickel-core-sample/custody.json",
+      "issued_at": "2026-05-05T12:20:00.000Z",
+      "summary": "Fixture custody statement for sealed sample and label."
+    },
+    {
+      "type": "risk_disclosure",
+      "issuer": "did:plutus:rwa-lab",
+      "hash": "sha256:5858585858585858585858585858585858585858585858585858585858585858",
+      "uri": "ipfs://brc-dmp-rwa/nickel-core-sample/risk.json",
+      "issued_at": "2026-05-05T12:20:00.000Z",
+      "summary": "High-risk template disclosure for non-audited commodity-linked RWA."
+    }
+  ],
+  "trust": {
+    "authenticity": 20,
+    "provenance": 15,
+    "market": 0,
+    "curation": 5,
+    "community": 0,
+    "risk": 70
+  }
+}

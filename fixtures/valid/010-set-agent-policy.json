@@ -1,0 +1,66 @@
+{
+  "p": "brc-dmp",
+  "v": "0.1",
+  "op": "set_agent_policy",
+  "event_id": "evt:010-set-agent-policy",
+  "dmo_id": "dmo:plutus-indexer-agent-001",
+  "buc": "btc:840009:3333333333333333333333333333333333333333333333333333333333333333:0:459",
+  "source": {
+    "chain": "bitcoin",
+    "block": 840009,
+    "txid": "3333333333333333333333333333333333333333333333333333333333333333",
+    "vout": 0,
+    "sat": "459"
+  },
+  "actor": {
+    "type": "did",
+    "id": "did:plutus:13space",
+    "label": "13space"
+  },
+  "timestamp": "2026-05-05T11:30:00.000Z",
+  "agent_policy": {
+    "permissions": [
+      {
+        "scope": "read_public_state",
+        "granted_by": "did:plutus:13space",
+        "proof_hash": "sha256:3434343434343434343434343434343434343434343434343434343434343434"
+      },
+      {
+        "scope": "index_fixture_events",
+        "granted_by": "did:plutus:13space",
+        "proof_hash": "sha256:3535353535353535353535353535353535353535353535353535353535353535"
+      },
+      {
+        "scope": "record_interaction_proofs",
+        "granted_by": "did:plutus:13space",
+        "proof_hash": "sha256:3636363636363636363636363636363636363636363636363636363636363636"
+      },
+      {
+        "scope": "propose_dao_actions",
+        "granted_by": "did:plutus:13space",
+        "proof_hash": "sha256:3737373737373737373737373737373737373737373737373737373737373737"
+      }
+    ],
+    "behavior_scope": {
+      "allowed_actions": [
+        "read_public_state",
+        "index_fixture_events",
+        "record_interaction_proofs",
+        "propose_dao_actions"
+      ],
+      "bounds": [
+        "fixture_only",
+        "no_private_data_disclosure",
+        "human_approval_required_for_transfer",
+        "public_reasoning_summary_required",
+        "rate_limited_writes"
+      ],
+      "max_daily_writes": 128
+    },
+    "interaction_privacy": {
+      "default_level": "selective",
+      "retention": "hashes_permanent_plaintext_requires_holder_grant",
+      "redaction_allowed": true
+    }
+  }
+}

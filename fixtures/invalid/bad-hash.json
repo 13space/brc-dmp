@@ -1,0 +1,24 @@
+{
+  "p": "brc-dmp",
+  "v": "0.1",
+  "op": "update_metadata",
+  "event_id": "evt:invalid-bad-hash",
+  "dmo_id": "dmo:the-one-rwa-001",
+  "buc": "btc:840100:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa:0:500",
+  "source": {
+    "chain": "bitcoin",
+    "block": 840100,
+    "txid": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "vout": 0,
+    "sat": "500"
+  },
+  "actor": {
+    "type": "did",
+    "id": "did:plutus:13space"
+  },
+  "timestamp": "2026-05-05T12:00:00.000Z",
+  "metadata": {
+    "uri": "ipfs://bad",
+    "hash": "sha256:not-a-real-hash"
+  }
+}

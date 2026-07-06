@@ -1,0 +1,50 @@
+{
+  "p": "brc-life",
+  "v": "1.0",
+  "op": "create",
+  "event_id": "evt:life-020-create-cell-0002",
+  "dmo_id": "dmo:genesis-cell-0002",
+  "buc": "btc:905000:1111111111111111111111111111111111111111111111111111111111111111:0:2000",
+  "tick": 905000,
+  "source": {
+    "chain": "bitcoin",
+    "block": 905000,
+    "txid": "1111111111111111111111111111111111111111111111111111111111111111",
+    "vout": 0,
+    "sat": "2000"
+  },
+  "actor": { "type": "did", "id": "did:plutus:13space", "label": "13space" },
+  "timestamp": "2026-06-03T00:00:00.000Z",
+  "kind": "autopoietic_agent",
+  "subject": {
+    "title": "Genesis Cell 0002",
+    "creator": "13space",
+    "category": "autopoietic_agent",
+    "description": "A well-fed organism that forages, forms a constraint loop, and reproduces."
+  },
+  "owner": {
+    "type": "agent_wallet",
+    "id": "agent-wallet:genesis-cell-0002",
+    "address": "bc1pcell0002000000000000000000000000000000000"
+  },
+  "metadata": {
+    "uri": "ipfs://brc-life-fixtures/cells/genesis-cell-0002.json",
+    "hash": "sha256:1212121212121212121212121212121212121212121212121212121212121212",
+    "mime": "application/json"
+  },
+  "genome": {
+    "M": "ref://genome/M/forage-and-convert-energy",
+    "R": "ref://genome/R/repair-and-replicate-components",
+    "phi": "ref://genome/phi/organization-map-that-reproduces-R",
+    "inscription": "btc:905000:sat:2000",
+    "hash": "sha256:2323232323232323232323232323232323232323232323232323232323232323",
+    "lineage": { "parent": null, "generation": 0 }
+  },
+  "metabolism": { "energy": 500, "basal_cost_per_tick": 2 },
+  "cognition": {
+    "free_energy": 2.5,
+    "sensors": ["niche", "market", "agent"],
+    "actuators": ["act", "spawn"],
+    "beliefs_hash": "sha256:3434343434343434343434343434343434343434343434343434343434343434"
+  }
+}

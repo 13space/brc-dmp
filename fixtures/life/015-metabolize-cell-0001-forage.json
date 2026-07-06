@@ -1,0 +1,24 @@
+{
+  "p": "brc-life",
+  "v": "1.0",
+  "op": "metabolize",
+  "event_id": "evt:life-015-metabolize-cell-0001",
+  "dmo_id": "dmo:genesis-cell-0001",
+  "buc": "btc:905003:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff:0:1000",
+  "tick": 905003,
+  "source": {
+    "chain": "bitcoin",
+    "block": 905003,
+    "txid": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "vout": 0,
+    "sat": "1000"
+  },
+  "actor": { "type": "agent_wallet", "id": "agent-wallet:genesis-cell-0001", "address": "bc1pcell0001000000000000000000000000000000000" },
+  "timestamp": "2026-06-03T00:30:00.000Z",
+  "energy": {
+    "flow": "intake",
+    "amount": 20,
+    "note": "last successful forage before the niche dries up",
+    "proof_hash": "sha256:8888888888888888888888888888888888888888888888888888888888888888"
+  }
+}

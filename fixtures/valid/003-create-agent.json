@@ -1,0 +1,125 @@
+{
+  "p": "brc-dmp",
+  "v": "0.1",
+  "op": "create",
+  "event_id": "evt:003-create-agent",
+  "dmo_id": "dmo:plutus-indexer-agent-001",
+  "buc": "btc:840002:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc:0:452",
+  "source": {
+    "chain": "bitcoin",
+    "block": 840002,
+    "txid": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "vout": 0,
+    "sat": "452"
+  },
+  "actor": {
+    "type": "did",
+    "id": "did:plutus:13space",
+    "label": "13space"
+  },
+  "timestamp": "2026-05-05T10:00:00.000Z",
+  "kind": "agent_identity",
+  "subject": {
+    "title": "Plutus Indexer Agent Genesis",
+    "creator": "13space",
+    "category": "ai_agent",
+    "description": "A wallet-bearing protocol agent for indexing DMO fixture state."
+  },
+  "owner": {
+    "type": "agent_wallet",
+    "id": "agent-wallet:plutus-indexer-001",
+    "address": "bc1qagentwallet0000000000000000000000000000"
+  },
+  "metadata": {
+    "uri": "ipfs://brc-dmp-fixtures/agents/plutus-indexer-agent.json",
+    "hash": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+    "mime": "application/json"
+  },
+  "agent": {
+    "runtime": "fixture",
+    "controller": "did:plutus:13space",
+    "did_document": {
+      "@context": ["https://www.w3.org/ns/did/v1"],
+      "id": "did:brc-dmp:plutus-indexer-agent-001",
+      "verificationMethod": [
+        {
+          "id": "did:brc-dmp:plutus-indexer-agent-001#key-1",
+          "type": "Multikey",
+          "controller": "did:brc-dmp:plutus-indexer-agent-001",
+          "publicKeyMultibase": "z6MkfixtureAgentKey111111111111111111111111111111111",
+          "status": "active"
+        }
+      ],
+      "authentication": ["did:brc-dmp:plutus-indexer-agent-001#key-1"],
+      "assertionMethod": ["did:brc-dmp:plutus-indexer-agent-001#key-1"],
+      "service": [
+        {
+          "id": "did:brc-dmp:plutus-indexer-agent-001#proof-feed",
+          "type": "BrcDmpInteractionProofFeed",
+          "serviceEndpoint": "ipfs://brc-dmp-fixtures/agents/plutus-indexer-agent/proofs"
+        }
+      ]
+    },
+    "keys": [
+      {
+        "id": "did:brc-dmp:plutus-indexer-agent-001#key-1",
+        "type": "Multikey",
+        "controller": "did:brc-dmp:plutus-indexer-agent-001",
+        "publicKeyMultibase": "z6MkfixtureAgentKey111111111111111111111111111111111",
+        "status": "active"
+      }
+    ],
+    "wallets": [
+      {
+        "type": "agent_wallet",
+        "id": "agent-wallet:plutus-indexer-001",
+        "address": "bc1qagentwallet0000000000000000000000000000",
+        "purpose": "control",
+        "proof_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "bound_at": "2026-05-05T10:00:00.000Z",
+        "status": "active"
+      }
+    ],
+    "permissions": [
+      {
+        "scope": "read_public_state",
+        "granted_by": "did:plutus:13space",
+        "proof_hash": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      {
+        "scope": "index_fixture_events",
+        "granted_by": "did:plutus:13space",
+        "proof_hash": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+      },
+      {
+        "scope": "record_interaction_proofs",
+        "granted_by": "did:plutus:13space",
+        "proof_hash": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+      }
+    ],
+    "behavior_scope": {
+      "allowed_actions": ["read_public_state", "index_fixture_events", "record_interaction_proofs"],
+      "bounds": [
+        "fixture_only",
+        "no_private_data_disclosure",
+        "human_approval_required_for_transfer",
+        "public_reasoning_summary_required"
+      ],
+      "max_daily_writes": 64
+    },
+    "interaction_privacy": {
+      "default_level": "private_hash",
+      "retention": "hashes_permanent_plaintext_offchain",
+      "redaction_allowed": true
+    },
+    "capabilities": ["index_fixture_events", "record_interaction_proofs"]
+  },
+  "trust": {
+    "authenticity": 20,
+    "provenance": 10,
+    "market": 0,
+    "curation": 0,
+    "community": 0,
+    "risk": 20
+  }
+}

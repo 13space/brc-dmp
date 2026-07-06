@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" role="img" aria-labelledby="title desc">
+  <title id="title">The One Sample Artifact</title>
+  <desc id="desc">A sample RWA artifact visual for BRC-DMP fixtures.</desc>
+  <rect width="900" height="620" fill="#f7f7f4"/>
+  <rect x="90" y="70" width="720" height="480" fill="#ffffff" stroke="#171717" stroke-width="8"/>
+  <path d="M190 430 C260 220 380 190 460 310 C530 410 630 250 710 160" fill="none" stroke="#c98518" stroke-width="18" stroke-linecap="round"/>
+  <circle cx="450" cy="310" r="84" fill="none" stroke="#267a57" stroke-width="10"/>
+  <path d="M392 310 L450 242 L508 310 L450 378 Z" fill="#2d5f9a" opacity="0.82"/>
+  <text x="120" y="115" font-family="ui-monospace, Menlo, monospace" font-size="24" fill="#171717">BRC-DMP / RWA-001</text>
+  <text x="120" y="515" font-family="ui-monospace, Menlo, monospace" font-size="20" fill="#60666d">proof-linked sample artifact</text>
+</svg>

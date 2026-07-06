@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://brc-dmp.local/schema/events/create.schema.json",
+  "allOf": [
+    { "$ref": "event.schema.json" },
+    {
+      "type": "object",
+      "required": ["kind", "subject", "owner", "metadata"],
+      "properties": {
+        "op": { "const": "create" },
+        "kind": {
+          "enum": [
+            "digital_matter",
+            "ordinal_art",
+            "rwa_art",
+            "sft_fraction",
+            "did_badge",
+            "dao_position",
+            "agent_identity",
+            "interaction_proof"
+          ]
+        },
+        "subject": { "$ref": "event.schema.json#/$defs/subject" },
+        "owner": { "$ref": "event.schema.json#/$defs/party" },
+        "metadata": { "$ref": "event.schema.json#/$defs/metadata" },
+        "proofs": {
+          "type": "array",
+          "items": { "$ref": "event.schema.json#/$defs/proof" }
+        },
+        "trust": { "$ref": "event.schema.json#/$defs/trustVector" }
+      }
+    }
+  ]
+}

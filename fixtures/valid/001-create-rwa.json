@@ -1,0 +1,62 @@
+{
+  "p": "brc-dmp",
+  "v": "0.1",
+  "op": "create",
+  "event_id": "evt:001-create-rwa",
+  "dmo_id": "dmo:the-one-rwa-001",
+  "buc": "btc:840000:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa:0:450",
+  "source": {
+    "chain": "bitcoin",
+    "block": 840000,
+    "txid": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "vout": 0,
+    "sat": "450"
+  },
+  "actor": {
+    "type": "did",
+    "id": "did:plutus:13space",
+    "label": "13space"
+  },
+  "timestamp": "2026-05-05T09:00:00.000Z",
+  "kind": "rwa_art",
+  "subject": {
+    "title": "The One Sample Artifact",
+    "creator": "13space",
+    "category": "fine_art",
+    "description": "A fixture asset for the BRC-DMP RWA proof loop."
+  },
+  "owner": {
+    "type": "bitcoin_address",
+    "id": "bc1qtheoneowner000000000000000000000000000",
+    "address": "bc1qtheoneowner000000000000000000000000000"
+  },
+  "metadata": {
+    "uri": "ipfs://brc-dmp-fixtures/the-one-sample-artifact.json",
+    "hash": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+    "mime": "application/json",
+    "image_uri": "/media/the-one-sample-artifact.svg",
+    "certificate_uri": "ipfs://brc-dmp-fixtures/proofs/creator-statement.json",
+    "risk": {
+      "level": "medium",
+      "summary": "Fixture provenance only; production onboarding requires custody and independent authentication."
+    }
+  },
+  "proofs": [
+    {
+      "type": "creator_statement",
+      "issuer": "did:plutus:13space",
+      "hash": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+      "uri": "ipfs://brc-dmp-fixtures/proofs/creator-statement.json",
+      "issued_at": "2026-05-05T09:00:00.000Z",
+      "summary": "Creator declared the artifact and initial provenance record."
+    }
+  ],
+  "trust": {
+    "authenticity": 25,
+    "provenance": 20,
+    "market": 0,
+    "curation": 5,
+    "community": 0,
+    "risk": 30
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://brc-dmp.local/schema/events/fractionalize.schema.json",
+  "allOf": [
+    { "$ref": "event.schema.json" },
+    {
+      "type": "object",
+      "required": ["fraction"],
+      "properties": {
+        "op": { "const": "fractionalize" },
+        "fraction": {
+          "type": "object",
+          "required": ["fraction_id", "total_supply", "unit", "protocol_layer"],
+          "properties": {
+            "fraction_id": { "type": "string", "minLength": 3 },
+            "total_supply": { "type": "integer", "minimum": 1 },
+            "unit": { "type": "string", "minLength": 1 },
+            "protocol_layer": { "enum": ["indexed_statement", "runes", "rgbpp", "ckb"] },
+            "rights": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      }
+    }
+  ]
+}

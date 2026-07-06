@@ -1,0 +1,31 @@
+{
+  "name": "brc-dmp",
+  "version": "1.0.0-alpha.0",
+  "private": true,
+  "type": "module",
+  "description": "The One Digital Matter Life Protocol / BRC-DMP (brc-dmp v0.1) + BRC-LIFE (brc-life v1.0) development workspace.",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "validate": "node packages/schema/src/cli.js fixtures/valid fixtures/life fixtures/population fixtures/invalid",
+    "index": "node services/indexer/src/cli.js fixtures/valid",
+    "life": "node services/world-engine/src/cli.js fixtures/life",
+    "life:pop": "node services/world-engine/src/cli.js fixtures/population",
+    "evolve": "node services/world-engine/src/evolve-cli.js",
+    "adapt": "node services/world-engine/src/adapt-cli.js",
+    "unify": "node services/world-engine/src/unify-cli.js",
+    "soc": "node services/world-engine/src/soc-cli.js",
+    "chain": "node services/organic-chain/src/cli.js",
+    "network": "node services/organic-chain/src/network-cli.js",
+    "csv": "node services/csv-adapter/src/cli.js",
+    "csv:signet": "node services/csv-adapter/src/signet-cli.js",
+    "csv:signet:anchor": "node services/csv-adapter/src/signet-anchor.js",
+    "gen:pop": "node scripts/generate-population.mjs",
+    "api": "node services/api/server.js"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "dependencies": {
+    "@scure/btc-signer": "^2.2.0"
+  }
+}

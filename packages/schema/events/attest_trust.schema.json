@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://brc-dmp.local/schema/events/attest_trust.schema.json",
+  "allOf": [
+    { "$ref": "event.schema.json" },
+    {
+      "type": "object",
+      "required": ["attestation"],
+      "properties": {
+        "op": { "const": "attest_trust" },
+        "attestation": { "$ref": "event.schema.json#/$defs/proof" },
+        "trust_delta": { "$ref": "event.schema.json#/$defs/trustDelta" }
+      }
+    }
+  ]
+}

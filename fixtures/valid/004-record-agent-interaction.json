@@ -1,0 +1,51 @@
+{
+  "p": "brc-dmp",
+  "v": "0.1",
+  "op": "record_interaction",
+  "event_id": "evt:004-record-agent-interaction",
+  "dmo_id": "dmo:plutus-indexer-agent-001",
+  "buc": "btc:840003:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd:0:453",
+  "source": {
+    "chain": "bitcoin",
+    "block": 840003,
+    "txid": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "vout": 0,
+    "sat": "453"
+  },
+  "actor": {
+    "type": "ai_agent",
+    "id": "dmo:plutus-indexer-agent-001",
+    "label": "Plutus Indexer Agent Genesis"
+  },
+  "timestamp": "2026-05-05T10:05:00.000Z",
+  "interaction": {
+    "interaction_id": "ix:agent-indexed-rwa-001",
+    "channel": "agent",
+    "participants": [
+      {
+        "type": "human",
+        "id": "did:plutus:13space",
+        "label": "13space"
+      },
+      {
+        "type": "ai_agent",
+        "id": "dmo:plutus-indexer-agent-001",
+        "label": "Plutus Indexer Agent Genesis"
+      }
+    ],
+    "summary": "The agent indexed the first RWA fixture and produced a state proof.",
+    "occurred_at": "2026-05-05T10:05:00.000Z",
+    "input_hash": "sha256:5555555555555555555555555555555555555555555555555555555555555555",
+    "output_hash": "sha256:6666666666666666666666666666666666666666666666666666666666666666",
+    "transcript_hash": "sha256:7777777777777777777777777777777777777777777777777777777777777777",
+    "tool_trace_hash": "sha256:8888888888888888888888888888888888888888888888888888888888888888",
+    "proof_uri": "ipfs://brc-dmp-fixtures/interactions/agent-indexed-rwa-001.json",
+    "proof_hash": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
+    "privacy": {
+      "level": "private_hash",
+      "disclosure": "Only public summary and cryptographic commitments are indexed.",
+      "redaction_hash": "sha256:1010101010101010101010101010101010101010101010101010101010101010"
+    },
+    "related_assets": ["dmo:the-one-rwa-001"]
+  }
+}

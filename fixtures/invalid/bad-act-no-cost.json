@@ -1,0 +1,19 @@
+{
+  "p": "brc-life",
+  "v": "1.0",
+  "op": "act",
+  "event_id": "evt:bad-act-no-cost",
+  "dmo_id": "dmo:genesis-cell-0002",
+  "buc": "btc:905001:7878787878787878787878787878787878787878787878787878787878787878:0:2000",
+  "tick": 905001,
+  "source": {
+    "chain": "bitcoin",
+    "block": 905001,
+    "txid": "7878787878787878787878787878787878787878787878787878787878787878",
+    "vout": 0,
+    "sat": "2000"
+  },
+  "actor": { "type": "agent_wallet", "id": "agent-wallet:genesis-cell-0002", "address": "bc1pcell0002000000000000000000000000000000000" },
+  "timestamp": "2026-06-03T00:10:00.000Z",
+  "action": { "kind": "forage", "summary": "an action with no energy cost would let an agent act for free" }
+}

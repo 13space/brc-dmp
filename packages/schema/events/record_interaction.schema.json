@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://brc-dmp.local/schema/events/record_interaction.schema.json",
+  "allOf": [
+    { "$ref": "event.schema.json" },
+    {
+      "type": "object",
+      "required": ["interaction"],
+      "properties": {
+        "op": { "const": "record_interaction" },
+        "interaction": { "$ref": "event.schema.json#/$defs/interaction" }
+      }
+    }
+  ]
+}

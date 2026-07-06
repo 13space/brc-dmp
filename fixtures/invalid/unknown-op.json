@@ -1,0 +1,20 @@
+{
+  "p": "brc-dmp",
+  "v": "0.1",
+  "op": "execute_code",
+  "event_id": "evt:invalid-unknown-op",
+  "dmo_id": "dmo:bad-op",
+  "buc": "btc:840102:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc:0:502",
+  "source": {
+    "chain": "bitcoin",
+    "block": 840102,
+    "txid": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "vout": 0,
+    "sat": "502"
+  },
+  "actor": {
+    "type": "did",
+    "id": "did:plutus:13space"
+  },
+  "timestamp": "2026-05-05T12:20:00.000Z"
+}

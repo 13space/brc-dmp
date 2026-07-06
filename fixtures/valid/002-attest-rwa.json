@@ -1,0 +1,36 @@
+{
+  "p": "brc-dmp",
+  "v": "0.1",
+  "op": "attest_trust",
+  "event_id": "evt:002-attest-rwa",
+  "dmo_id": "dmo:the-one-rwa-001",
+  "buc": "btc:840001:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb:1:451",
+  "source": {
+    "chain": "bitcoin",
+    "block": 840001,
+    "txid": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "vout": 1,
+    "sat": "451"
+  },
+  "actor": {
+    "type": "institution",
+    "id": "did:plutus:curator-lab",
+    "label": "Plutus Curator Lab"
+  },
+  "timestamp": "2026-05-05T09:20:00.000Z",
+  "attestation": {
+    "type": "curation_review",
+    "issuer": "did:plutus:curator-lab",
+    "hash": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+    "uri": "ipfs://brc-dmp-fixtures/proofs/curation-review.json",
+    "issued_at": "2026-05-05T09:20:00.000Z",
+    "summary": "Curator accepted the sample asset into the fixture collection."
+  },
+  "trust_delta": {
+    "authenticity": 15,
+    "provenance": 20,
+    "curation": 35,
+    "community": 5,
+    "risk": -10
+  }
+}

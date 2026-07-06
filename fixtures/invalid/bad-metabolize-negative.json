@@ -1,0 +1,19 @@
+{
+  "p": "brc-life",
+  "v": "1.0",
+  "op": "metabolize",
+  "event_id": "evt:bad-metabolize-negative",
+  "dmo_id": "dmo:genesis-cell-0001",
+  "buc": "btc:905001:8989898989898989898989898989898989898989898989898989898989898989:0:1000",
+  "tick": 905001,
+  "source": {
+    "chain": "bitcoin",
+    "block": 905001,
+    "txid": "8989898989898989898989898989898989898989898989898989898989898989",
+    "vout": 0,
+    "sat": "1000"
+  },
+  "actor": { "type": "agent_wallet", "id": "agent-wallet:genesis-cell-0001", "address": "bc1pcell0001000000000000000000000000000000000" },
+  "timestamp": "2026-06-03T00:10:00.000Z",
+  "energy": { "flow": "intake", "amount": -5, "note": "energy cannot be conjured from a negative intake" }
+}

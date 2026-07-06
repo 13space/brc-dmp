@@ -1,0 +1,28 @@
+{
+  "p": "brc-dmp",
+  "v": "0.1",
+  "op": "fractionalize",
+  "event_id": "evt:005-fractionalize-rwa",
+  "dmo_id": "dmo:the-one-rwa-001",
+  "buc": "btc:840004:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:0:454",
+  "source": {
+    "chain": "bitcoin",
+    "block": 840004,
+    "txid": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "vout": 0,
+    "sat": "454"
+  },
+  "actor": {
+    "type": "did",
+    "id": "did:plutus:13space",
+    "label": "13space"
+  },
+  "timestamp": "2026-05-05T10:30:00.000Z",
+  "fraction": {
+    "fraction_id": "frac:the-one-rwa-001-alpha",
+    "total_supply": 10000,
+    "unit": "THEONE-RWA001-SHARE",
+    "protocol_layer": "indexed_statement",
+    "rights": ["display_governance", "dao_discussion", "future_rgbpp_mapping"]
+  }
+}
