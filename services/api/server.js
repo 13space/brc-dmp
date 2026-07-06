@@ -4,6 +4,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { buildStateFromDirectory, loadEventsFromDirectory } from "../indexer/src/state.js";
 import { batchEvents, buildContract, createMockBitcoin, planGenesis, validateContract } from "../csv-adapter/src/index.js";
+import { verifyAgentState } from "../agent-wallet/verify.js";
+import { loadOffchainEventMap, scanAndIndexTransactions, createHashResolver } from "../csv-adapter/src/chain-indexer.js";
 import { buildEngineRootPayload, loadLifeWorld } from "./life.js";
 import { evolveSweep, runEvolution } from "../world-engine/src/evolve.js";
 import { adaptiveDriftStudy, runAdaptiveEvolution } from "../world-engine/src/adapt.js";
@@ -18,6 +20,7 @@ const port = Number(process.env.BRC_DMP_PORT || 8787);
 const host = process.env.BRC_DMP_HOST || "127.0.0.1";
 const fixtureDir = path.resolve(projectRoot, process.env.BRC_DMP_FIXTURE_DIR || "fixtures/valid");
 const lifeFixtureDir = path.resolve(projectRoot, process.env.BRC_LIFE_FIXTURE_DIR || "fixtures/life");
+const chainFixtureDir = path.resolve(projectRoot, "fixtures/chain");
 
 const server = http.createServer(async (request, response) => {
   try {
@@ -35,6 +38,28 @@ const server = http.createServer(async (request, response) => {
     }
     if (url.pathname.startsWith("/media/")) {
       return serveMediaFile(response, url.pathname);
+    }
+
+    // Chain adapter: scan fixture txs + off-chain hash store into indexed state.
+    if (url.pathname === "/chain/index") {
+      const txs = await loadChainFixtureTxs(chainFixtureDir);
+      const offchain = await loadOffchainEventMap(path.join(chainFixtureDir, "offchain"));
+      const indexed = await scanAndIndexTransactions(txs, {
+        resolveEventByHash: createHashResolver(offchain)
+      });
+      return send(response, 200, {
+        event_count: indexed.event_count,
+        state_root: indexed.state.state_root,
+        engine_root: indexed.world.engine_root,
+        assets: indexed.state.assets.length,
+        events: indexed.events.map((event) => ({
+          op: event.op,
+          dmo_id: event.dmo_id,
+          event_id: event.event_id,
+          transport: event.chain_meta?.transport,
+          block: event.source?.block
+        }))
+      });
     }
 
     // BRC-LIFE World Engine routes (independent, selectable fixture worlds).
@@ -279,6 +304,7 @@ const server = http.createServer(async (request, response) => {
       if (parts[2] === "proofs") return send(response, 200, asset.proofs);
       if (parts[2] === "trust") return send(response, 200, asset.trust);
       if (parts[2] === "interactions") return send(response, 200, asset.interactions);
+      if (parts[2] === "agent" && parts[3] === "verify") return send(response, 200, verifyAgentState(asset));
       if (parts[2] === "agent") return send(response, 200, asset.agent || {});
       if (parts[2] === "did") return send(response, 200, asset.agent?.did_document || {});
     }
@@ -409,4 +435,16 @@ function buildDaoSummary(state) {
 
 function trustMean(trust) {
   return (trust.authenticity + trust.provenance + trust.market + trust.curation + trust.community + (100 - trust.risk)) / 6;
+}
+
+async function loadChainFixtureTxs(directory) {
+  const { readdir, readFile } = await import("node:fs/promises");
+  const files = (await readdir(directory))
+    .filter((file) => file.startsWith("tx-") && file.endsWith(".json"))
+    .sort();
+  const txs = [];
+  for (const file of files) {
+    txs.push(JSON.parse(await readFile(path.join(directory, file), "utf8")));
+  }
+  return txs;
 }

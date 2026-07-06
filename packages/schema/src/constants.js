@@ -55,6 +55,8 @@ export const CLOSURE_STATUS = Object.freeze(["closed", "critical_closed", "broke
 // Three-valued causal tag carried by interactions (ConstraintNet v1.3).
 export const CAUSAL_TAGS = Object.freeze(["pos", "neg", "dark"]);
 
+export const SIGNATURE_SCHEMES = Object.freeze(["schnorr-bip340", "ecdsa-legacy"]);
+
 // Allowed metabolism ledger entry kinds.
 export const ENERGY_FLOWS = Object.freeze(["intake", "spend", "basal", "transfer_in", "transfer_out", "reclaim"]);
 

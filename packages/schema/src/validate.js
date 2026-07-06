@@ -10,6 +10,7 @@ import {
   OPERATIONS,
   PARTY_TYPES,
   PRIVACY_LEVELS,
+  SIGNATURE_SCHEMES,
   SUPPORTED_PROTOCOLS,
   SUPPORTED_VERSIONS,
   TRUST_DIMENSIONS
@@ -203,6 +204,12 @@ function validateRecordInteraction(event, issues) {
 function validateBindWallet(event, issues) {
   requireFields(event, ["wallet_binding"], issues);
   validateWalletBinding(event.wallet_binding, "wallet_binding", issues);
+  if (event.signature_proof !== undefined) {
+    validateSignatureProof(event.signature_proof, "signature_proof", issues);
+  }
+  if (event.wallet_binding.signature_proof !== undefined) {
+    validateSignatureProof(event.wallet_binding.signature_proof, "wallet_binding.signature_proof", issues);
+  }
 }
 
 function validateRotateKey(event, issues) {
@@ -218,6 +225,10 @@ function validateRotateKey(event, issues) {
   }
   validateVerificationMethod(rotation.new_key, "key_rotation.new_key", issues);
   if (typeof rotation.reason !== "string" || rotation.reason.length < 1) issues.push("key_rotation.reason must be a string");
+  if (rotation.proof_hash !== undefined && !isHashRef(rotation.proof_hash)) issues.push("key_rotation.proof_hash must be a sha256 hash ref");
+  if (rotation.signature_proof !== undefined) {
+    validateSignatureProof(rotation.signature_proof, "key_rotation.signature_proof", issues);
+  }
 }
 
 function validateSetAgentPolicy(event, issues) {
@@ -591,6 +602,21 @@ function validateWalletBinding(binding, path, issues) {
   if (binding.status !== undefined && !["active", "revoked", "rotated"].includes(binding.status)) {
     issues.push(`${path}.status is not supported`);
   }
+  if (binding.signature_proof !== undefined) {
+    validateSignatureProof(binding.signature_proof, `${path}.signature_proof`, issues);
+  }
+}
+
+function validateSignatureProof(proof, path, issues) {
+  if (!isPlainObject(proof)) {
+    issues.push(`${path} must be an object`);
+    return;
+  }
+  requireFields(proof, ["scheme", "signature", "public_key"], issues, path);
+  if (!SIGNATURE_SCHEMES.includes(proof.scheme)) issues.push(`${path}.scheme is not supported`);
+  if (typeof proof.signature !== "string" || proof.signature.length < 16) issues.push(`${path}.signature must be hex`);
+  if (typeof proof.public_key !== "string" || proof.public_key.length < 64) issues.push(`${path}.public_key must be hex`);
+  if (proof.message !== undefined && typeof proof.message !== "string") issues.push(`${path}.message must be a string`);
 }
 
 function validateAgentPolicy(policy, path, issues) {

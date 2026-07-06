@@ -283,7 +283,9 @@ function applyRotateKey(state, event, eventRef) {
     new_key_id: activeKey.id,
     reason,
     event_id: event.event_id,
-    timestamp: event.timestamp
+    timestamp: event.timestamp,
+    proof_hash: event.key_rotation.proof_hash,
+    signature_proof: event.key_rotation.signature_proof
   });
   dmo.history.push(historyEntry(eventRef));
 }

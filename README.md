@@ -10,7 +10,7 @@ Bitcoin-rooted digital matter protocol workspace. This repository combines **BRC
 4. Expose assets, proofs, trust, interactions, and state roots through a local API.
 5. Run organic-chain, PoUW, SOC/Zipf, and Bitcoin/Signet adapter experiments offline.
 
-**71 tests pass** with no network dependency.
+**82 tests pass** with no network dependency.
 
 ## Protocol Surface
 
@@ -52,7 +52,7 @@ API: `http://127.0.0.1:8787`
 
 | Command | Purpose |
 |---------|---------|
-| `npm test` | Full test suite (71 tests) |
+| `npm test` | Full test suite (82 tests) |
 | `npm run validate` | Validate valid/life/population fixtures; reject invalid ones |
 | `npm run index` | Build v0.1/v1.0 compatible DMO state |
 | `npm run life` | Run World Engine on `fixtures/life` |
@@ -66,7 +66,8 @@ API: `http://127.0.0.1:8787`
 | `npm run network` | Network partition / reorg experiment CLI |
 | `npm run csv` | CSV / OP_RETURN adapter CLI |
 | `npm run csv:signet` | Signet adapter CLI |
-| `npm run csv:signet:anchor` | Signet anchor transaction construction |
+| `npm run chain:scan` | Scan chain fixture txs + off-chain hash store into indexed state |
+| `npm run chain:scan:block` | Scan a live Esplora block (requires network) |
 
 ## Layout
 
@@ -106,6 +107,20 @@ With `npm run api` running:
 - `GET /life/engine-root` — `engine_root`, `state_root`, summary
 - `GET /life?world=population` — 20-agent Zipf / criticality world
 - `GET /evolve`, `/adapt`, `/unify`, `/soc`, `/chain`, `/network`, `/mode-a` — research experiment endpoints
+- `GET /chain/index` — chain adapter demo (inscription + OP_RETURN hash → indexer)
+- `GET /assets/:id/agent/verify` — verify optional wallet/key `signature_proof` records
+
+Agent wallet signatures (optional on `bind_wallet` / `rotate_key`):
+
+- `signature_proof.scheme`: `schnorr-bip340` | `ecdsa-legacy`
+- Canonical messages: `services/agent-wallet/messages.js`
+- Verification: `services/agent-wallet/verify.js`
+
+Chain event adapter:
+
+- Inscription transport: `application/vnd.brc-dmp.event+json` ord envelope
+- OP_RETURN transport: `BRC1` envelope (full event or 32-byte event hash + off-chain store)
+- Scanner/indexer: `services/csv-adapter/src/chain-scanner.js`, `chain-indexer.js`
 
 Frontend views: Assets, Agents, **Life** (world switcher + Zipf/SOC/chain experiments), Proofs, DAO.
 

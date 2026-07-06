@@ -19,6 +19,8 @@
     "csv": "node services/csv-adapter/src/cli.js",
     "csv:signet": "node services/csv-adapter/src/signet-cli.js",
     "csv:signet:anchor": "node services/csv-adapter/src/signet-anchor.js",
+    "chain:scan": "node services/csv-adapter/src/chain-cli.js scan-fixtures",
+    "chain:scan:block": "node services/csv-adapter/src/chain-cli.js scan-block",
     "gen:pop": "node scripts/generate-population.mjs",
     "api": "node services/api/server.js"
   },
