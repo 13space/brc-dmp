@@ -109,7 +109,7 @@ life fixtures, population Zipf, evolution, SOC, organic chain, and Mode A.
 ## Run
 
 ```bash
-npm test                 # 86 tests: schema, indexer, world engine, API, adapters
+npm test                 # 89 tests: schema, indexer, world engine, API, adapters
 npm run validate         # validates fixtures/valid + fixtures/life + fixtures/population; rejects fixtures/invalid
 npm run life             # prints the life arc of every agent in fixtures/life
 npm run life:pop         # prints population / Zipf world for fixtures/population

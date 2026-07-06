@@ -2,7 +2,7 @@ import { schnorr, secp256k1 } from "@noble/curves/secp256k1.js";
 import { sha256 } from "@noble/hashes/sha2.js";
 import { pubECDSA } from "@scure/btc-signer/utils.js";
 
-export const SIGNATURE_SCHEMES = Object.freeze(["schnorr-bip340", "ecdsa-legacy"]);
+export const SIGNATURE_SCHEMES = Object.freeze(["schnorr-bip340", "ecdsa-legacy", "bip322-simple"]);
 
 function messageBytes(message) {
   return new TextEncoder().encode(message);
@@ -45,3 +45,4 @@ function bytesToHex(bytes) {
 }
 
 export { bitcoinMessageHash };
+export { signBip322Simple } from "./bip322.js";

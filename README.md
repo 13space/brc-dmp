@@ -10,7 +10,7 @@ Bitcoin-rooted digital matter protocol workspace. This repository combines **BRC
 4. Expose assets, proofs, trust, interactions, and state roots through a local API.
 5. Run organic-chain, PoUW, SOC/Zipf, and Bitcoin/Signet adapter experiments offline.
 
-**86 tests pass** with no network dependency.
+**89 tests pass** with no network dependency.
 
 ## Protocol Surface
 
@@ -52,7 +52,7 @@ API: `http://127.0.0.1:8787`
 
 | Command | Purpose |
 |---------|---------|
-| `npm test` | Full test suite (86 tests) |
+| `npm test` | Full test suite (89 tests) |
 | `npm run validate` | Validate valid/life/population fixtures; reject invalid ones |
 | `npm run index` | Build v0.1/v1.0 compatible DMO state |
 | `npm run life` | Run World Engine on `fixtures/life` |
@@ -119,7 +119,8 @@ With `npm run api` running:
 
 Agent wallet signatures (optional on `bind_wallet` / `rotate_key`):
 
-- `signature_proof.scheme`: `schnorr-bip340` | `ecdsa-legacy`
+- `signature_proof.scheme`: `schnorr-bip340` | `ecdsa-legacy` | `bip322-simple`
+- `bip322-simple` uses a base64 BIP-322 simple signature (SegWit/Taproot compatible); other schemes store hex signatures
 - Canonical messages: `services/agent-wallet/messages.js`
 - Verification: `services/agent-wallet/verify.js`
 

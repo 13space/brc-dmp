@@ -33,6 +33,7 @@
     "node": ">=24"
   },
   "dependencies": {
-    "@scure/btc-signer": "^2.2.0"
+    "@scure/btc-signer": "^2.2.0",
+    "bip322-js": "^2.0.0"
   }
 }

@@ -5,7 +5,7 @@ import { hashObject } from "../packages/schema/src/canonicalize.js";
 import { assertValidEvent } from "../packages/schema/src/validate.js";
 import { buildStateFromDirectory } from "../services/indexer/src/state.js";
 import { bindWalletMessage, rotateKeyMessage } from "../services/agent-wallet/messages.js";
-import { signEcdsaLegacy, signSchnorrBip340 } from "../services/agent-wallet/sign.js";
+import { signEcdsaLegacy, signSchnorrBip340, signBip322Simple } from "../services/agent-wallet/sign.js";
 import { verifyAgentEvent, verifyAgentState, verifySignatureProof } from "../services/agent-wallet/verify.js";
 import { p2wpkh } from "@scure/btc-signer/payment.js";
 import { pubECDSA } from "@scure/btc-signer/utils.js";
@@ -21,6 +21,32 @@ test("schnorr-bip340 signatures verify for bind_wallet messages", () => {
   const result = verifySignatureProof(proof, { message });
   assert.equal(result.verified, true);
   assert.equal(result.scheme, "schnorr-bip340");
+});
+
+test("bip322-simple signatures verify for bind_wallet messages", () => {
+  const event = makeBindWalletEvent();
+  const message = bindWalletMessage(event);
+  const proof = signBip322Simple(message, priv, wallet.address);
+  const result = verifySignatureProof(proof, { message, address: wallet.address });
+  assert.equal(result.verified, true);
+  assert.equal(result.scheme, "bip322-simple");
+});
+
+test("verifyAgentEvent accepts bip322-simple bind_wallet events", () => {
+  const event = makeBindWalletEvent();
+  event.wallet_binding.signature_proof = signBip322Simple(bindWalletMessage(event), priv, wallet.address);
+  assert.equal(verifyAgentEvent(event).verified, true);
+  assertValidEvent(event);
+});
+
+test("tampered bip322-simple signatures are rejected", () => {
+  const event = makeBindWalletEvent();
+  const proof = signBip322Simple(bindWalletMessage(event), priv, wallet.address);
+  proof.signature = `${proof.signature.slice(0, -4)}AAAA`;
+  event.wallet_binding.signature_proof = proof;
+  const result = verifyAgentEvent(event);
+  assert.equal(result.verified, false);
+  assert.equal(result.reason, "bip322_verification_failed");
 });
 
 test("ecdsa-legacy signatures verify and match the bound address", () => {

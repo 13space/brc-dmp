@@ -614,7 +614,13 @@ function validateSignatureProof(proof, path, issues) {
   }
   requireFields(proof, ["scheme", "signature", "public_key"], issues, path);
   if (!SIGNATURE_SCHEMES.includes(proof.scheme)) issues.push(`${path}.scheme is not supported`);
-  if (typeof proof.signature !== "string" || proof.signature.length < 16) issues.push(`${path}.signature must be hex`);
+  if (proof.scheme === "bip322-simple") {
+    if (typeof proof.signature !== "string" || proof.signature.length < 8) {
+      issues.push(`${path}.signature must be a BIP-322 base64 string`);
+    }
+  } else if (typeof proof.signature !== "string" || proof.signature.length < 16) {
+    issues.push(`${path}.signature must be hex`);
+  }
   if (typeof proof.public_key !== "string" || proof.public_key.length < 64) issues.push(`${path}.public_key must be hex`);
   if (proof.message !== undefined && typeof proof.message !== "string") issues.push(`${path}.message must be a string`);
 }

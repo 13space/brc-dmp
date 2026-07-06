@@ -6,6 +6,7 @@ import { hash160 } from "@scure/btc-signer/utils.js";
 import { hashObject } from "../../packages/schema/src/canonicalize.js";
 import { messageForAgentEvent } from "./messages.js";
 import { bitcoinMessageHash, SIGNATURE_SCHEMES } from "./sign.js";
+import { verifyBip322Simple } from "./bip322.js";
 
 export { SIGNATURE_SCHEMES };
 
@@ -38,6 +39,11 @@ export function verifySignatureProof(proof, { message, address, network = NETWOR
   }
   const signedMessage = proof.message || message;
   if (!signedMessage) return { verified: false, reason: "missing_message" };
+
+  if (proof.scheme === "bip322-simple") {
+    if (!address) return { verified: false, reason: "missing_address", scheme: proof.scheme };
+    return verifyBip322Simple(signedMessage, address, proof.signature, proof.public_key);
+  }
 
   const signature = hexToBytes(proof.signature);
   const publicKey = hexToBytes(proof.public_key);
