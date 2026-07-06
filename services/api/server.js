@@ -7,6 +7,7 @@ import { batchEvents, buildContract, createMockBitcoin, planGenesis, validateCon
 import { verifyAgentState } from "../agent-wallet/verify.js";
 import { loadOffchainEventMap, scanAndIndexTransactions, createHashResolver } from "../csv-adapter/src/chain-indexer.js";
 import { createChainIngestor } from "../csv-adapter/src/chain-ingest.js";
+import { resolveChainConfig } from "../csv-adapter/src/chain-config.js";
 import { loadChainFixtureTxs } from "../csv-adapter/src/chain-fixtures.js";
 import { buildEngineRootPayload, loadLifeWorld } from "./life.js";
 import { evolveSweep, runEvolution } from "../world-engine/src/evolve.js";
@@ -23,8 +24,7 @@ const host = process.env.BRC_DMP_HOST || "127.0.0.1";
 const fixtureDir = path.resolve(projectRoot, process.env.BRC_DMP_FIXTURE_DIR || "fixtures/valid");
 const lifeFixtureDir = path.resolve(projectRoot, process.env.BRC_LIFE_FIXTURE_DIR || "fixtures/life");
 const chainFixtureDir = path.resolve(projectRoot, "fixtures/chain");
-const chainIngestStatePath = process.env.BRC_CHAIN_STATE_PATH || path.join(projectRoot, ".tmp/chain-ingest/state.json");
-const chainOffchainDir = process.env.BRC_CHAIN_OFFCHAIN_DIR || path.join(chainFixtureDir, "offchain");
+const chainConfig = resolveChainConfig();
 
 const server = http.createServer(async (request, response) => {
   try {
@@ -67,7 +67,12 @@ const server = http.createServer(async (request, response) => {
     }
 
     if (url.pathname === "/chain/ingest/status" || url.pathname === "/chain/ingest/state") {
-      const ingestor = createChainIngestor({ statePath: chainIngestStatePath, offchainDir: chainOffchainDir });
+      const ingestor = createChainIngestor({
+        statePath: chainConfig.statePath,
+        offchainDir: chainConfig.offchainDir,
+        baseUrl: chainConfig.baseUrl,
+        network: chainConfig.network
+      });
       await ingestor.init();
       const snapshot = await ingestor.getSnapshot();
       if (url.pathname === "/chain/ingest/status") {

@@ -53,7 +53,7 @@ test("protocol-v1.0 draft documents the implemented life surface", async () => {
   for (const op of LIFE_OPS) assert.match(doc, new RegExp(`\`${op}\``), `doc missing op ${op}`);
   for (const status of CLOSURE_STATUS) assert.match(doc, new RegExp(status), `doc missing status ${status}`);
 
-  assert.match(doc, /89 tests/);
+  assert.match(doc, /92 tests/);
   assert.match(doc, /\/life/);
   assert.match(doc, /engine-root/);
   assert.match(doc, /fixtures\/population/);

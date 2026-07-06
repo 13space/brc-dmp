@@ -6,15 +6,20 @@ import { scanTransactions, sortChainEvents } from "./chain-scanner.js";
 
 const DEFAULT_STATE = {
   version: 1,
+  network: null,
+  esplora_base: null,
   last_height: -1,
   tip_height: null,
+  bootstrap: null,
   seen_txids: [],
-  events: []
+  events: [],
+  updated_at: null
 };
 
 export function createChainIngestor(options = {}) {
   const statePath = options.statePath;
   const offchainDir = options.offchainDir;
+  const network = options.network || "signet";
   const fetchImpl = options.fetchImpl || globalThis.fetch;
   const backend = options.backend || createEsploraBitcoin({ baseUrl: options.baseUrl, fetchImpl });
   const baseUrl = backend.baseUrl;
@@ -36,6 +41,9 @@ export function createChainIngestor(options = {}) {
 
   async function persist() {
     if (!statePath) return;
+    state.network = network;
+    state.esplora_base = baseUrl;
+    state.updated_at = new Date().toISOString();
     await mkdir(path.dirname(statePath), { recursive: true });
     await writeFile(statePath, `${JSON.stringify(state, null, 2)}\n`, "utf8");
   }
@@ -57,7 +65,21 @@ export function createChainIngestor(options = {}) {
 
   async function blockTxs(height) {
     const hash = await fetchJson(`/block-height/${height}`);
-    return fetchJson(`/block/${hash}/txs`);
+    const txs = [];
+    let start = 0;
+    for (;;) {
+      const pagePath = start === 0 ? `/block/${hash}/txs` : `/block/${hash}/txs/${start}`;
+      const page = await fetchJson(pagePath);
+      if (!Array.isArray(page) || page.length === 0) break;
+      txs.push(...page);
+      if (page.length < 25) break;
+      start += page.length;
+    }
+    return txs;
+  }
+
+  async function fetchTx(txid) {
+    return fetchJson(`/tx/${txid}`);
   }
 
   async function ingestTransactions(txs) {
@@ -86,6 +108,20 @@ export function createChainIngestor(options = {}) {
     return { height, ...result, event_count: state.events.length };
   }
 
+  async function bootstrapFromTxid(txid) {
+    await init();
+    const tx = await fetchTx(txid);
+    const height = tx.status?.block_height;
+    if (!Number.isInteger(height) || height < 0) {
+      throw new Error(`tx ${txid} is not confirmed on ${network}`);
+    }
+    state.bootstrap = { txid, height, at: new Date().toISOString() };
+    state.last_height = height - 1;
+    await persist();
+    const summary = await catchUp({ fromHeight: height });
+    return { bootstrap: state.bootstrap, ...summary };
+  }
+
   async function catchUp({ fromHeight = state.last_height + 1, toHeight = null } = {}) {
     await init();
     const tip = toHeight ?? (await tipHeight());
@@ -107,6 +143,10 @@ export function createChainIngestor(options = {}) {
     const indexed = await indexChainEvents(state.events);
     return {
       ingest: {
+        network: state.network || network,
+        esplora_base: state.esplora_base || baseUrl,
+        bootstrap: state.bootstrap,
+        updated_at: state.updated_at,
         last_height: state.last_height,
         tip_height: state.tip_height,
         seen_txids: state.seen_txids.length,
@@ -121,8 +161,10 @@ export function createChainIngestor(options = {}) {
     persist,
     tipHeight,
     blockTxs,
+    fetchTx,
     ingestTransactions,
     scanBlock,
+    bootstrapFromTxid,
     catchUp,
     getSnapshot,
     getState: () => state

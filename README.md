@@ -10,7 +10,7 @@ Bitcoin-rooted digital matter protocol workspace. This repository combines **BRC
 4. Expose assets, proofs, trust, interactions, and state roots through a local API.
 5. Run organic-chain, PoUW, SOC/Zipf, and Bitcoin/Signet adapter experiments offline.
 
-**89 tests pass** with no network dependency.
+**92 tests pass** with no network dependency.
 
 ## Protocol Surface
 
@@ -52,7 +52,7 @@ API: `http://127.0.0.1:8787`
 
 | Command | Purpose |
 |---------|---------|
-| `npm test` | Full test suite (89 tests) |
+| `npm test` | Full test suite (92 tests) |
 | `npm run validate` | Validate valid/life/population fixtures; reject invalid ones |
 | `npm run index` | Build v0.1/v1.0 compatible DMO state |
 | `npm run life` | Run World Engine on `fixtures/life` |
@@ -68,10 +68,14 @@ API: `http://127.0.0.1:8787`
 | `npm run csv:signet` | Signet adapter CLI |
 | `npm run chain:scan` | Scan committed `fixtures/chain/tx-*.json` into indexed state |
 | `npm run chain:fixtures` | Regenerate chain tx fixtures from protocol events |
-| `npm run chain:ingest:fixtures` | Persist fixture scan into `.tmp/chain-ingest/state.json` |
+| `npm run chain:ingest:fixtures` | Persist fixture scan into `.tmp/chain-ingest/fixtures/state.json` |
 | `npm run chain:ingest` | Catch up Esplora blocks once (Signet by default) |
 | `npm run chain:daemon` | Poll Esplora and ingest new blocks continuously |
 | `npm run chain:ingest:status` | Print persisted ingest/indexer status |
+| `npm run chain:signet:catch-up` | Signet-only catch-up (state under `.tmp/chain-ingest/signet/`) |
+| `npm run chain:signet:daemon` | Signet ingest daemon (poll Blockstream signet Esplora) |
+| `npm run chain:signet:bootstrap` | Bootstrap from an anchor txid, then catch up to tip |
+| `npm run chain:signet:status` | Print Signet ingest cursor + indexed roots |
 | `npm run chain:scan:block` | Scan a live Esplora block (requires network) |
 
 ## Layout
@@ -113,8 +117,30 @@ With `npm run api` running:
 - `GET /life?world=population` — 20-agent Zipf / criticality world
 - `GET /evolve`, `/adapt`, `/unify`, `/soc`, `/chain`, `/network`, `/mode-a` — research experiment endpoints
 - `GET /chain/index` — chain adapter demo (inscription + OP_RETURN hash → indexer)
-- `GET /chain/ingest/status` — persisted Esplora ingest cursor + roots
+- `GET /chain/ingest/status` — persisted Esplora ingest cursor + roots (respects `BRC_CHAIN_NETWORK`)
 - `GET /chain/ingest/state` — full indexed state from persisted ingest
+
+### Signet production ingest workflow
+
+After anchoring BRC events on signet (inscription / OP_RETURN):
+
+```bash
+npm run csv:signet:anchor -- newkey          # create signet key (SIGNET ONLY)
+# fund address → BRC_SIGNET_WIF=... npm run csv:signet:anchor -- --send
+npm run chain:signet:bootstrap -- <ANCHOR_TXID>
+npm run chain:signet:daemon                  # continuous ingest
+npm run api                                  # GET /chain/ingest/state
+```
+
+Environment:
+
+| Variable | Default | Purpose |
+|----------|---------|---------|
+| `BRC_CHAIN_NETWORK` | `signet` | Network label + state directory |
+| `BRC_ESPLORA` | Blockstream signet API | Esplora base URL |
+| `BRC_CHAIN_STATE_PATH` | `.tmp/chain-ingest/<network>/state.json` | Persisted cursor |
+| `BRC_CHAIN_OFFCHAIN_DIR` | `fixtures/chain/offchain` | Hash → event resolver |
+| `BRC_CHAIN_POLL_MS` | `30000` | Daemon poll interval |
 - `GET /assets/:id/agent/verify` — verify optional wallet/key `signature_proof` records
 
 Agent wallet signatures (optional on `bind_wallet` / `rotate_key`):
